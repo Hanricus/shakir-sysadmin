@@ -1,69 +1,515 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abd Shakir | Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #0f172a; color: #f8fafc; }
-    </style>
-</head>
-<body class="font-sans antialiased">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Abd Shakir — MSc IT Graduate, Information Systems Management & Cybersecurity Specialist." />
+  <meta name="theme-color" content="#7c3aed" />
 
-    <nav class="p-6 border-b border-slate-800">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold tracking-tighter text-blue-400">ABD SHAKIR</h1>
-            <div class="space-x-6 text-sm font-medium">
-                <a href="#about" class="hover:text-blue-400">About</a>
-                <a href="#projects" class="hover:text-blue-400">Projects</a>
-                <a href="https://github.com/Hanricus" target="_blank" class="hover:text-blue-400">GitHub</a>
-            </div>
-        </div>
+  <title>Abd Shakir | Portfolio</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor"         aria-hidden="true"></div>
+  <div class="cursor-follower" aria-hidden="true"></div>
+
+  <!-- Ambient Background -->
+  <div class="bg-ambient" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="grid-lines" aria-hidden="true"></div>
+
+  <!-- Particle Canvas -->
+  <canvas id="particle-canvas"
+          style="position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.6;"
+          aria-hidden="true"></canvas>
+
+  <div class="page-wrapper">
+
+    <!-- ════════════════════════════════════════
+         NAVIGATION
+    ════════════════════════════════════════ -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="nav-inner">
+
+        <a href="#hero" class="nav-logo" aria-label="Abd Shakir — Home">
+          <span class="nav-logo-dot" aria-hidden="true"></span>
+          ABD SHAKIR
+        </a>
+
+        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+
+        <ul class="nav-links" role="list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <a href="https://github.com/Hanricus"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="nav-cta">
+              GitHub ↗
+            </a>
+          </li>
+        </ul>
+
+      </div>
     </nav>
 
-    <header class="container mx-auto py-20 px-6 text-center">
-        <h2 class="text-4xl md:text-6xl font-extrabold mb-4">MSc in Information Technology</h2>
-        <p class="text-lg text-slate-400 max-w-2xl mx-auto">
-            Specializing in Information Systems Management & Cybersecurity. 
-            Passionate about building secure systems and exploring network vulnerabilities.
-        </p>
-    </header>
 
-    <main class="container mx-auto px-6 space-y-20 pb-20">
-        
-        <section id="about" class="max-w-3xl mx-auto bg-slate-800/50 p-8 rounded-2xl border border-slate-700">
-            <h3 class="text-2xl font-bold mb-4 text-blue-400">Tentang Saya</h3>
-            <p class="text-slate-300 leading-relaxed">
-                Saya adalah graduan Bachelor of Information Science (Hons) dalam Information System Management dari UiTM Machang dan kini sedang melanjutkan pengajian peringkat Sarjana (Master) di UiTM Shah Alam. 
-                Mempunyai pengalaman praktikal di <strong>Lumut Naval Shipyard (LUNAS)</strong> dalam jabatan Sistem Maklumat.
-            </p>
-        </section>
+    <!-- ════════════════════════════════════════
+         HERO
+    ════════════════════════════════════════ -->
+    <section id="hero" class="hero" aria-labelledby="hero-name">
+      <div class="hero-content">
 
-        <section id="projects">
-            <h3 class="text-2xl font-bold mb-8 text-center">Featured Projects</h3>
-            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                
-                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-blue-500 transition">
-                    <h4 class="text-xl font-bold mb-2">LUNAS E-shop System</h4>
-                    <p class="text-sm text-slate-400 mb-4 text-justify">Sistem e-commerce khusus untuk keperluan dalaman Lumut Naval Shipyard yang dibangunkan menggunakan Laravel.</p>
-                    <span class="text-xs font-mono text-blue-400">PHP • Laravel • MySQL</span>
-                </div>
+        <!-- Left -->
+        <div class="hero-left">
+          <div class="hero-tag">
+            <span class="hero-tag-dot" aria-hidden="true"></span>
+            Available for opportunities
+          </div>
 
-                <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-blue-500 transition">
-                    <h4 class="text-xl font-bold mb-2">Mini-Turnitin Tool</h4>
-                    <p class="text-sm text-slate-400 mb-4 text-justify">Alat pengesan plagiarisme dan AI untuk kegunaan peribadi, memfokuskan kepada integriti akademik.</p>
-                    <span class="text-xs font-mono text-blue-400">Laravel • JavaScript • API</span>
-                </div>
+          <h1 class="hero-name" id="hero-name">
+            <span class="hero-name-first">Abd</span>
+            <span class="hero-name-last">Shakir</span>
+          </h1>
 
+          <p class="hero-title">
+            MSc IT · <span>Information Systems</span> · Cybersecurity
+          </p>
+
+          <p class="hero-desc">
+            Postgraduate at <strong>UiTM Shah Alam</strong> specialising in
+            Information Systems Management &amp; Cybersecurity. Building secure
+            systems, exploring network vulnerabilities, and crafting digital
+            solutions.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn-primary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+              </svg>
+              <span>View Projects</span>
+            </a>
+            <a href="#contact" class="btn-outline">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Let's Talk
+            </a>
+          </div>
+
+          <!-- Stats -->
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-value"
+                   data-count="2"
+                   data-suffix="+">0</div>
+              <div class="stat-label">Projects Built</div>
             </div>
-        </section>
+            <div class="stat-item">
+              <div class="stat-value"
+                   data-count="1"
+                   data-suffix="yr">0</div>
+              <div class="stat-label">Industry Exp.</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value"
+                   data-count="3"
+                   data-suffix="+">0</div>
+              <div class="stat-label">Tech Stacks</div>
+            </div>
+          </div>
+        </div>
 
-    </main>
+        <!-- Right — Avatar -->
+        <div class="hero-right" aria-hidden="true">
+          <div class="avatar-wrapper">
 
-    <footer class="text-center py-10 border-t border-slate-800 text-slate-500 text-sm">
-        <p>&copy; 2026 Abd Shakir (Hanricus). Hosted on GitHub Pages.</p>
+            <div class="avatar-glow"></div>
+            <div class="avatar-rings">
+              <div class="avatar-ring avatar-ring-1"></div>
+              <div class="avatar-ring avatar-ring-2"></div>
+              <div class="avatar-ring avatar-ring-3"></div>
+            </div>
+
+            <div class="avatar-frame">
+              <!--
+                CARA GUNA GAMBAR SENDIRI:
+                1. Letak gambar ko dalam folder images/ (contoh: images/profile.jpg)
+                2. Uncomment baris <img> di bawah dan comment/remove <div class="avatar-placeholder">
+              -->
+              <!-- <img src="images/profile.jpg" alt="Abd Shakir" class="avatar-img" /> -->
+
+              <div class="avatar-placeholder">
+                <div class="avatar-placeholder-icon">👤</div>
+                <div class="avatar-placeholder-text">
+                  Letak gambar kau<br/>di images/profile.jpg
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating badges -->
+            <div class="avatar-badge badge-top-right">
+              <span class="avatar-badge-icon">🛡️</span>
+              Cybersecurity
+            </div>
+            <div class="avatar-badge badge-bottom-left">
+              <span class="avatar-badge-icon">🎓</span>
+              MSc IT · UiTM
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Scroll cue -->
+      <div class="scroll-indicator" aria-hidden="true">
+        <div class="scroll-line"></div>
+        <span class="scroll-text">Scroll</span>
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         ABOUT
+    ════════════════════════════════════════ -->
+    <div class="divider" aria-hidden="true"></div>
+
+    <section id="about" class="section" aria-labelledby="about-title">
+      <div class="section-header reveal">
+        <div class="section-tag">01 — About Me</div>
+        <h2 class="section-title" id="about-title">
+          Who is <span>Abd Shakir</span>?
+        </h2>
+      </div>
+
+      <div class="about-grid">
+
+        <!-- Identity & Education -->
+        <div class="about-identity reveal reveal-delay-1">
+
+          <div class="identity-card">
+            <div class="identity-label">Current Status</div>
+            <div class="identity-value">Postgraduate Student</div>
+            <div class="identity-sub">Master of Science in Information Technology</div>
+          </div>
+
+          <div class="identity-card">
+            <div class="identity-label">Education</div>
+            <ul class="edu-list">
+              <li class="edu-item">
+                <div class="edu-dot"></div>
+                <div>
+                  <div class="edu-degree">MSc Information Technology</div>
+                  <div class="edu-school">UiTM Shah Alam · 2024 – Present</div>
+                </div>
+              </li>
+              <li class="edu-item">
+                <div class="edu-dot"></div>
+                <div>
+                  <div class="edu-degree">BIS (Hons) Information Systems Management</div>
+                  <div class="edu-school">UiTM Machang · Completed</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Experience -->
+          <div class="identity-card">
+            <div class="identity-label">Experience</div>
+            <div class="exp-item">
+              <div class="exp-icon-wrap">⚓</div>
+              <div class="exp-content">
+                <div class="exp-role">IT Intern — Information Systems Dept.</div>
+                <div class="exp-company">Lumut Naval Shipyard (LUNAS)</div>
+                <div class="exp-duration">Industrial Training</div>
+                <div class="exp-desc">
+                  Hands-on experience in naval IS operations, system maintenance, and
+                  internal IT infrastructure support.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Text & Skills -->
+        <div class="about-text reveal reveal-delay-2">
+          <p>
+            Saya <strong>Abd Shakir bin Sabri</strong>, seorang graduan IT yang
+            passionate dalam bidang keselamatan siber dan pembangunan sistem
+            maklumat. Kini melanjutkan pengajian peringkat Sarjana di
+            <strong>UiTM Shah Alam</strong>.
+          </p>
+          <p>
+            Pengalaman praktikal di <strong>Lumut Naval Shipyard (LUNAS)</strong>
+            memberi saya pendedahan kepada persekitaran IT yang kritikal dan
+            berdisiplin tinggi — pengalaman yang membentuk cara saya berfikir
+            tentang keselamatan dan kebolehpercayaan sistem.
+          </p>
+          <p>
+            Saya percaya bahawa teknologi bukan sekadar alat — ia adalah bahasa
+            baharu untuk menyelesaikan masalah dunia sebenar.
+          </p>
+
+          <!-- Skills -->
+          <div class="skills-block">
+            <div class="skills-title">Tech Stack &amp; Tools</div>
+            <div class="skills-grid">
+              <span class="skill-pill"><span class="skill-pill-icon">🐘</span>PHP</span>
+              <span class="skill-pill"><span class="skill-pill-icon">🔴</span>Laravel</span>
+              <span class="skill-pill"><span class="skill-pill-icon">🗄️</span>MySQL</span>
+              <span class="skill-pill"><span class="skill-pill-icon">🌐</span>JavaScript</span>
+              <span class="skill-pill"><span class="skill-pill-icon">⚛️</span>HTML/CSS</span>
+              <span class="skill-pill"><span class="skill-pill-icon">🐍</span>Python</span>
+              <span class="skill-pill"><span class="skill-pill-icon">🔒</span>Cybersecurity</span>
+              <span class="skill-pill"><span class="skill-pill-icon">🌐</span>Network Admin</span>
+              <span class="skill-pill"><span class="skill-pill-icon">🐙</span>Git / GitHub</span>
+              <span class="skill-pill"><span class="skill-pill-icon">🐧</span>Linux</span>
+              <span class="skill-pill"><span class="skill-pill-icon">📊</span>Sys Analysis</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         PROJECTS
+    ════════════════════════════════════════ -->
+    <div class="divider" aria-hidden="true"></div>
+
+    <section id="projects" class="section" aria-labelledby="projects-title">
+      <div class="section-header reveal">
+        <div class="section-tag">02 — Projects</div>
+        <h2 class="section-title" id="projects-title">
+          Featured <span>Work</span>
+        </h2>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Featured Project -->
+        <article class="project-card featured reveal">
+          <div class="featured-left">
+            <div class="featured-badge">
+              ⭐ Featured Project
+            </div>
+            <div class="project-header" style="margin-bottom:16px">
+              <div class="project-icon" style="font-size:1.8rem">🛒</div>
+              <span class="project-arrow">↗</span>
+            </div>
+            <h3 class="project-title">LUNAS E-Shop System</h3>
+            <p class="project-desc">
+              Sistem e-commerce dalaman yang dibangunkan khusus untuk keperluan
+              Lumut Naval Shipyard. Membolehkan pengurusan katalog produk,
+              pesanan, dan rekod transaksi secara digital — menggantikan proses
+              manual yang tidak efisien.
+            </p>
+            <div class="project-tags">
+              <span class="tag">PHP</span>
+              <span class="tag">Laravel</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">Blade</span>
+              <span class="tag">Bootstrap</span>
+            </div>
+          </div>
+          <div class="featured-right">
+            <div style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.15);border-radius:12px;padding:20px;text-align:center;">
+              <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);margin-bottom:8px;letter-spacing:.1em;text-transform:uppercase">Project Type</div>
+              <div style="font-size:0.9rem;color:var(--text-secondary)">Industrial Internship</div>
+              <div style="margin-top:16px;font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Organisation</div>
+              <div style="font-size:0.85rem;color:var(--accent-purple);margin-top:4px">LUNAS · Lumut</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card reveal reveal-delay-1">
+          <div class="project-header">
+            <div class="project-icon">🔍</div>
+            <span class="project-arrow">↗</span>
+          </div>
+          <h3 class="project-title">Mini-Turnitin Tool</h3>
+          <p class="project-desc">
+            Alat pengesan plagiarisme dan kandungan AI yang dibangunkan untuk
+            kegunaan peribadi dan akademik. Memfokuskan kepada integriti
+            akademik dengan membandingkan teks terhadap sumber-sumber luar
+            melalui integrasi API.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Laravel</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">REST API</span>
+            <span class="tag">NLP</span>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card reveal reveal-delay-2">
+          <div class="project-header">
+            <div class="project-icon">🛡️</div>
+            <span class="project-arrow">↗</span>
+          </div>
+          <h3 class="project-title">Network Security Analysis</h3>
+          <p class="project-desc">
+            Kajian dan analisis kelemahan rangkaian menggunakan tools
+            seperti Wireshark dan Nmap. Sebahagian daripada kajian
+            cybersecurity peringkat Sarjana — mengenal pasti, mendokumentasi,
+            dan mencadangkan mitigasi terhadap potensi ancaman.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Wireshark</span>
+            <span class="tag">Nmap</span>
+            <span class="tag">Kali Linux</span>
+            <span class="tag">Research</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         CONTACT
+    ════════════════════════════════════════ -->
+    <div class="divider" aria-hidden="true"></div>
+
+    <section id="contact" class="section" aria-labelledby="contact-title">
+      <div class="section-header reveal">
+        <div class="section-tag">03 — Contact</div>
+        <h2 class="section-title" id="contact-title">
+          Let's <span>Connect</span>
+        </h2>
+      </div>
+
+      <div class="contact-wrapper">
+
+        <div class="contact-info reveal reveal-delay-1">
+          <p class="contact-desc">
+            Sama ada untuk peluang kerja, kolaborasi projek, atau sekadar
+            berbual tentang IT dan cybersecurity — inbox saya sentiasa terbuka.
+          </p>
+
+          <div class="contact-links">
+            <a href="https://github.com/Hanricus"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="contact-link">
+              <div class="contact-link-icon">🐙</div>
+              <div class="contact-link-text">
+                <div class="contact-link-label">GitHub</div>
+                <div class="contact-link-value">github.com/Hanricus</div>
+              </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/abd-shakir"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="contact-link">
+              <div class="contact-link-icon">💼</div>
+              <div class="contact-link-text">
+                <div class="contact-link-label">LinkedIn</div>
+                <div class="contact-link-value">linkedin.com/in/abd-shakir</div>
+              </div>
+            </a>
+
+            <a href="mailto:abdshakir@example.com" class="contact-link">
+              <div class="contact-link-icon">✉️</div>
+              <div class="contact-link-text">
+                <div class="contact-link-label">Email</div>
+                <div class="contact-link-value">abdshakir@example.com</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="reveal reveal-delay-2"
+             style="background:var(--bg-card);border:1px solid var(--border-subtle);
+                    border-radius:var(--radius-lg);padding:40px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;
+                      background:linear-gradient(90deg,var(--accent-violet),var(--accent-cyan))"></div>
+
+          <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:.15em;
+                      text-transform:uppercase;color:var(--accent-cyan);margin-bottom:24px">
+            Quick Info
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <div>
+              <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:.1em;
+                           text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Location</div>
+              <div style="color:var(--text-primary);font-size:.95rem">Shah Alam, Selangor 🇲🇾</div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:.1em;
+                           text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Availability</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="display:inline-block;width:8px;height:8px;border-radius:50%;
+                              background:#22c55e;box-shadow:0 0 8px #22c55e;animation:pulse-dot 2s infinite"></span>
+                <span style="color:var(--text-primary);font-size:.95rem">Open to Opportunities</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:.1em;
+                           text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Interest Areas</div>
+              <div style="color:var(--text-secondary);font-size:.88rem;line-height:1.6">
+                Cybersecurity · Information Systems<br/>
+                Network Security · Web Development
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════
+         FOOTER
+    ════════════════════════════════════════ -->
+    <footer class="footer" role="contentinfo">
+      <div class="footer-left">
+        <strong>ABD SHAKIR (HANRICUS)</strong>
+        &copy; 2026 · Hosted on GitHub Pages
+      </div>
+      <div class="footer-right">
+        <a href="#hero"     class="footer-link">Top</a>
+        <a href="#about"    class="footer-link">About</a>
+        <a href="#projects" class="footer-link">Projects</a>
+        <a href="https://github.com/Hanricus"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="footer-link">GitHub ↗</a>
+      </div>
     </footer>
 
+  </div><!-- end page-wrapper -->
+
+  <!-- JavaScript -->
+  <script src="js/main.js" defer></script>
 </body>
 </html>
