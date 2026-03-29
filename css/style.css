@@ -68,6 +68,11 @@ body {
 }
 
 /* ── CUSTOM CURSOR ──────────────────────────── */
+
+a, button, .project-card, label, select, input {
+  cursor: none;
+}
+
 .cursor {
   position: fixed;
   width: 12px;
@@ -78,6 +83,7 @@ body {
   z-index: 9999;
   transition: transform 0.15s ease, opacity 0.3s;
   mix-blend-mode: screen;
+  
 }
 
 .cursor-follower {
