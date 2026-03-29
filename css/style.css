@@ -3,7 +3,7 @@
    Author: Abd Shakir (Hanricus)
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Exo+2:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
 
 /* ── ROOT VARIABLES ─────────────────────────── */
 :root {
@@ -28,9 +28,9 @@
   --border-subtle:  rgba(124, 58, 237, 0.15);
   --border-active:  rgba(168, 85, 247, 0.5);
 
-  --font-display:   'Syne', sans-serif;
-  --font-mono:      'Space Mono', monospace;
-  --font-body:      'DM Sans', sans-serif;
+  --font-display:   'Rajdhani', sans-serif;
+  --font-mono:      'Share Tech Mono', monospace;
+  --font-body:      'Exo 2', sans-serif;
 
   --radius-sm:  6px;
   --radius-md:  12px;
@@ -957,7 +957,7 @@ body::before {
   position: relative;
   overflow: hidden;
   transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
-  cursor: pointer;
+  cursor: none;
   text-decoration: none;
   display: flex;
   flex-direction: column;

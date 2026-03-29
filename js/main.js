@@ -49,11 +49,18 @@
   // Expand on hover
   document.querySelectorAll('a, button, .project-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
-      follower.style.transform += ' scale(1.5)';
+      follower.style.width = '52px';
+      follower.style.height = '52px';
       follower.style.borderColor = 'rgba(168,85,247,0.8)';
+      follower.style.marginLeft = '-8px';
+      follower.style.marginTop = '-8px';
     });
     el.addEventListener('mouseleave', () => {
+      follower.style.width = '36px';
+      follower.style.height = '36px';
       follower.style.borderColor = '';
+      follower.style.marginLeft = '0';
+      follower.style.marginTop = '0';
     });
   });
 })();
@@ -260,4 +267,48 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   }, { threshold: 0.4, rootMargin: '-80px 0px 0px 0px' });
 
   sections.forEach(s => observer.observe(s));
+})();
+
+/* ── GLITCH / CODING REVEAL ─────────────────── */
+(function initCodeReveal() {
+  const chars = '01アイウエオカキABCDEF<>{}[];#@!%$';
+
+  function scramble(el, finalText, duration) {
+    let frame = 0;
+    const totalFrames = Math.floor(duration / 40);
+    const timer = setInterval(() => {
+      const progress = frame / totalFrames;
+      let result = '';
+      for (let i = 0; i < finalText.length; i++) {
+        if (finalText[i] === ' ') { result += ' '; continue; }
+        if (i < Math.floor(progress * finalText.length)) {
+          result += finalText[i];
+        } else {
+          result += chars[Math.floor(Math.random() * chars.length)];
+        }
+      }
+      el.textContent = result;
+      frame++;
+      if (frame > totalFrames) {
+        el.textContent = finalText;
+        clearInterval(timer);
+      }
+    }, 40);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const original = el.dataset.original || el.textContent.trim();
+      el.dataset.original = original;
+      scramble(el, original, 900);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.3 });
+
+  // Apply to section titles and project titles
+  document.querySelectorAll('.section-title, .project-title, .hero-tag').forEach(el => {
+    observer.observe(el);
+  });
 })();
