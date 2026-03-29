@@ -618,7 +618,7 @@ body::before {
   animation: fadeSlideUp 0.8s 0.5s ease both;
 }
 
-.stat-item {}
+
 .stat-value {
   font-family: var(--font-display);
   font-size: 1.8rem;
@@ -736,8 +736,6 @@ body::before {
   gap: 70px;
   align-items: start;
 }
-
-.about-identity {}
 
 .identity-card {
   background: var(--bg-card);
@@ -916,7 +914,6 @@ body::before {
   box-shadow: 0 0 12px var(--accent-glow);
 }
 
-.exp-content {}
 .exp-role {
   font-weight: 600;
   color: var(--text-primary);
@@ -1095,8 +1092,6 @@ body::before {
   align-items: start;
 }
 
-.contact-info {}
-
 .contact-desc {
   color: var(--text-secondary);
   line-height: 1.8;
@@ -1137,7 +1132,6 @@ body::before {
   flex-shrink: 0;
 }
 
-.contact-link-text {}
 .contact-link-label {
   font-family: var(--font-mono);
   font-size: 0.6rem;
