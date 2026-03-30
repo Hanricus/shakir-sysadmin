@@ -302,7 +302,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const el = entry.target;
       const original = el.dataset.original || el.textContent.trim();
       el.dataset.original = original;
-      scramble(el, original, 1000);
+      scramble(el, original, 900);
       observer.unobserve(el);
     });
   }, { threshold: 0.3 });
