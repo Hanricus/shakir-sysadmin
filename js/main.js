@@ -269,9 +269,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   sections.forEach(s => observer.observe(s));
 })();
 
-/* ── GLITCH / CODING REVEAL ─────────────────── */
+/* ── GLITCH HEIL HITLER────────────────── */
 (function initCodeReveal() {
-  const chars = '01アイウエオカキABCDEF<>{}[];#@!%$';
+  const chars = '01アイウエオカキ304951ISRAELBABIBUTOH<>{}[];#@!%$HEILH1TLER';
 
   function scramble(el, finalText, duration) {
     let frame = 0;
@@ -302,7 +302,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const el = entry.target;
       const original = el.dataset.original || el.textContent.trim();
       el.dataset.original = original;
-      scramble(el, original, 900);
+      scramble(el, original, 1000);
       observer.unobserve(el);
     });
   }, { threshold: 0.3 });
