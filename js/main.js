@@ -321,7 +321,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   btn.id = 'a11y-btn';
   btn.setAttribute('aria-label', 'Accessibility Settings');
   btn.setAttribute('title', 'Accessibility / DKU Mode');
-  btn.innerHTML = `<i class='bx bx-accessibility'></i>`;
+  btn.innerHTML = `<i class='bx bx-rocket'></i>`;
 
   const panel = document.createElement('div');
   panel.id = 'a11y-panel';
@@ -363,16 +363,39 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     </div>
   `;
 
+  // ── Notification hint ──
+  const hint = document.createElement('div');
+  hint.id = 'a11y-hint';
+  hint.innerHTML = `<i class='bx bx-zap'></i> Lagging? Tap to optimize`;
+
   document.body.appendChild(panel);
   document.body.appendChild(btn);
+  document.body.appendChild(hint);
 
-  // ── Toggle panel open/close ──
-  btn.addEventListener('click', () => {
+  // Show hint after 3s, hide after 6s — only on first visit
+  if (!localStorage.getItem('a11y-hint-seen')) {
+    setTimeout(() => hint.classList.add('show'), 3000);
+    setTimeout(() => {
+      hint.classList.remove('show');
+      localStorage.setItem('a11y-hint-seen', '1');
+    }, 9000);
+  }
+
+  // ── Toggle panel ──
+  let ignoreNextDoc = false;
+
+  btn.addEventListener('pointerup', e => {
+    e.stopPropagation();
+    ignoreNextDoc = true;
     panel.classList.toggle('open');
+    hint.classList.remove('show');
+    // Reset flag lepas event cycle habis
+    setTimeout(() => { ignoreNextDoc = false; }, 10);
   });
 
-  // Close if click outside
-  document.addEventListener('click', e => {
+  // Close if tap/click outside — guna flag supaya tak close terus masa toggle
+  document.addEventListener('pointerup', e => {
+    if (ignoreNextDoc) return;
     if (!panel.contains(e.target) && e.target !== btn) {
       panel.classList.remove('open');
     }
@@ -384,14 +407,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   function applyPrefs() {
     document.body.classList.toggle('reduced-motion', !!prefs.motion);
     document.body.classList.toggle('high-contrast',  !!prefs.contrast);
-    const canvas = document.getElementById('particle-canvas');
-      if (canvas && prefs.particles) canvas.style.display = 'none';
-    document.documentElement.style.fontSize = (prefs.fontSize || 100) + '%';
 
-    document.getElementById('toggle-motion').checked   = !!prefs.motion;
-    document.getElementById('toggle-contrast').checked = !!prefs.contrast;
+    // Canvas off kalau either reduced-motion OR pause-particles aktif
+    const canvas = document.getElementById('particle-canvas');
+    if (canvas) canvas.style.display = (prefs.motion || prefs.particles) ? 'none' : '';
+
+    document.documentElement.style.fontSize = (prefs.fontSize || 100) + '%';
+    document.getElementById('toggle-motion').checked    = !!prefs.motion;
+    document.getElementById('toggle-contrast').checked  = !!prefs.contrast;
     document.getElementById('toggle-particles').checked = !!prefs.particles;
-    document.getElementById('font-slider').value       = prefs.fontSize || 100;
+    document.getElementById('font-slider').value        = prefs.fontSize || 100;
     document.getElementById('font-slider-label').textContent = (prefs.fontSize || 100) + '%';
   }
 
@@ -404,6 +429,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   document.getElementById('toggle-motion').addEventListener('change', e => {
     prefs.motion = e.target.checked;
     document.body.classList.toggle('reduced-motion', prefs.motion);
+    // Bila reduced motion ON — matikan particles sekali
+    const canvas = document.getElementById('particle-canvas');
+    if (canvas) canvas.style.display = prefs.motion ? 'none' : (prefs.particles ? 'none' : '');
     save();
   });
 
