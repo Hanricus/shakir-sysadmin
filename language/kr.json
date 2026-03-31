@@ -1,0 +1,19 @@
+{
+  "nav_about": "소개",
+  "nav_projects": "프로젝트",
+  "nav_contact": "연락처",
+  "hero_tag": "기회를 찾고 있습니다",
+  "hero_title": "IMS IT · 정보 시스템 · 기술자 & 시스템 개발자",
+  "hero_desc": "<strong>PHP</strong>, <strong>Laravel</strong>, <strong>JavaScript</strong> 전문 <strong>시스템 개발자</strong>입니다. 견고한 디지털 솔루션과 확장 가능한 애플리케이션 구축에 집중합니다.<br><br>현재 <strong>UiTM Shah Alam</strong>에서 <strong>정보기술</strong> 석사 과정 중이며, 전략적 정보 아키텍처 전문성을 키우고 있습니다.",
+  "hero_btn_projects": "프로젝트 보기",
+  "hero_btn_contact": "연락하기",
+  "stat_projects": "완성 프로젝트",
+  "stat_exp": "업계 경험",
+  "stat_stacks": "기술 스택",
+  "section_about_tag": "01 — 소개",
+  "section_about_title": "<span>Abdul Shakir</span>는 누구인가요?",
+  "section_projects_tag": "02 — 프로젝트",
+  "section_projects_title": "주요 <span>작업</span>",
+  "section_contact_tag": "03 — 연락처",
+  "section_contact_title": "<span>연결</span>합시다"
+}

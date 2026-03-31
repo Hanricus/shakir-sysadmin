@@ -1,0 +1,19 @@
+{
+  "nav_about": "About",
+  "nav_projects": "Projects",
+  "nav_contact": "Contact",
+  "hero_tag": "Available for opportunities",
+  "hero_title": "IMS IT · Information Systems · Technician & System Developer",
+  "hero_desc": "Dedicated <strong>System Developer</strong> specializing in <span class='hero-tech-tag'>PHP</span>, <span class='hero-tech-tag'>Laravel</span>, <span class='hero-tech-tag'>JavaScript</span>. Focused on building robust digital solutions and scalable enterprise or any other applications.<br><br>Currently pursuing <strong>Postgraduate</strong> studies at <strong>UiTM Shah Alam</strong> in <strong>Information Technology</strong> to further expertise in strategic information architecture.",
+  "hero_btn_projects": "View Projects",
+  "hero_btn_contact": "Let's Talk",
+  "stat_projects": "Projects Built",
+  "stat_exp": "Industry Exp.",
+  "stat_stacks": "Tech Stacks",
+  "section_about_tag": "01 — About Me",
+  "section_about_title": "Who is <span>Abdul Shakir</span>?",
+  "section_projects_tag": "02 — Projects",
+  "section_projects_title": "Featured <span>Work</span>",
+  "section_contact_tag": "03 — Contact",
+  "section_contact_title": "Let's <span>Connect</span>"
+}

@@ -95,17 +95,43 @@ const isLowEnd = (() => {
   const btn   = document.querySelector('.hamburger');
   const links = document.querySelector('.nav-links');
   if (!btn || !links) return;
+
+  function openMenu() {
+  links.classList.add('mobile-open');
+  btn.classList.add('active');
+  btn.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+  btn.style.zIndex = '100000'; // tambah ni — burger button nampak atas overlay
+  document.body.style.position = 'fixed'; // tambah ni — prevent background scroll iOS
+  document.body.style.width = '100%';     // tambah ni — prevent layout shift
+}
+
+  function closeMenu() {
+  links.classList.remove('mobile-open');
+  btn.classList.remove('active');
+  btn.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+  btn.style.zIndex = ''; // tambah ni — reset balik
+  document.body.style.position = ''; // tambah ni
+  document.body.style.width = '';    // tambah ni
+}
+
   btn.addEventListener('click', () => {
-    const open = links.classList.toggle('mobile-open');
-    btn.setAttribute('aria-expanded', open);
-    document.body.style.overflow = open ? 'hidden' : '';
+    links.classList.contains('mobile-open') ? closeMenu() : openMenu();
   });
+
   links.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      links.classList.remove('mobile-open');
-      btn.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    });
+    a.addEventListener('click', closeMenu);
+  });
+
+  // Close bila tekan ESC
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && links.classList.contains('mobile-open')) closeMenu();
+  });
+  
+  // Close bila tap kat luar menu (area kosong)
+  links.addEventListener('click', e => {
+    if (e.target === links) closeMenu();
   });
 })();
 
@@ -461,4 +487,287 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     applyPrefs();
     save();
   }
+})();
+
+/* ── SKILL DETAIL PANEL ────────────────────── */
+(function initSkillDetail() {
+  const pills  = document.querySelectorAll('.skill-pill[data-level]');
+  const panel  = document.getElementById('skill-detail');
+  const name   = document.getElementById('skill-detail-name');
+  const pct    = document.getElementById('skill-detail-pct');
+  const bar    = document.getElementById('skill-bar-fill');
+  const desc   = document.getElementById('skill-detail-desc');
+  if (!pills.length || !panel) return;
+
+  let active = null;
+
+  pills.forEach(pill => {
+    pill.style.cursor = 'pointer';
+    pill.setAttribute('role', 'button');
+    pill.setAttribute('tabindex', '0');
+
+    function toggle() {
+      const isSame = active === pill;
+
+      // Reset semua
+      pills.forEach(p => p.classList.remove('selected'));
+      bar.style.width = '0%';
+
+      if (isSame) {
+        // Klik sama — tutup panel
+        panel.classList.remove('active');
+        active = null;
+        return;
+      }
+
+      // Buka panel baru
+      active = pill;
+      pill.classList.add('selected');
+
+      const skillName = pill.querySelector('.skill-pill-icon')
+        ? pill.textContent.trim()
+        : pill.textContent.trim();
+      const level = pill.dataset.level;
+      const skillDesc = pill.dataset.desc;
+
+      name.textContent = skillName;
+      pct.textContent  = level + '%';
+      desc.textContent = skillDesc;
+
+      // Re-trigger animation
+      panel.classList.remove('active');
+      void panel.offsetWidth; // reflow
+      panel.classList.add('active');
+
+      // Bar animate — delay sikit bagi panel render dulu
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          bar.style.width = level + '%';
+        });
+      });
+
+      // Scroll panel masuk view kalau mobile
+      setTimeout(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 50);
+    }
+
+    pill.addEventListener('click', toggle);
+    pill.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+})();
+
+/* ── PROJECT MODAL ─────────────────────────── */
+(function initProjectModal() {
+
+  /* ====================================================
+     EDIT DATA PROJECT KO DI SINI
+     images: array gambar — letak path gambar ko
+     links:  array link — boleh letak live site, github, etc
+  ==================================================== */
+  const projectData = {
+    lunas: {
+      icon: `<i class='bx bx-cart-alt'></i>`,
+      badge: '⭐ Featured · Industrial Internship',
+      title: 'LUNAS E-Shop System',
+      org: 'Lumut Naval Shipyard (LUNAS) · Lumut, Perak',
+      desc: `Sistem e-commerce dalaman yang dibangunkan khusus untuk keperluan Lumut Naval Shipyard semasa tempoh internship. Platform ini membolehkan pengurusan katalog produk, pemprosesan pesanan, dan rekod transaksi secara digital — menggantikan proses manual yang tidak efisien dan mengurangkan kesilapan data.`,
+      tags: ['PHP', 'Laravel', 'MySQL', 'Bootstrap', 'REST API'],
+      images: [
+        'images/lunas-eshop.png',
+        'images/lunas1.png',
+        'images/lunas2.png',
+        'images/lunas3.png',
+        'images/lunas4.png',
+        'images/lunas5.png',
+        'images/lunas6.png',
+        'images/lunas7.png',
+        'images/lunas8.png',
+        /* tambah gambar lain kalau ada: 'images/lunas-2.png', */
+      ],
+      links: [
+        { label: '<i class=\'bx bx-link-external\'></i> Visit Live Site', url: 'http://58.26.246.69:8080/eshop/public', type: 'primary' },
+        /* { label: '<i class=\'bx bxl-github\'></i> GitHub', url: '#', type: 'secondary' }, */
+      ]
+    },
+    madrasah: {
+      icon: `<i class='bx bx-book-reader'></i>`,
+      badge: 'Web · CMS Development',
+      title: 'Madrasah CMS Portal',
+      org: 'Maima Jdarul Ikhlas',
+      desc: `Platform pengurusan kandungan (CMS) yang dibangunkan untuk institusi Madrasah. Memudahkan pihak pengurusan mengemas kini kos operasi, penempatan, galeri, dan maklumat awam secara mandiri tanpa memerlukan kemahiran teknikal. Domain aktif dan boleh dicapai oleh orang awam.`,
+      tags: ['WordPress', 'CMS', 'Web Hosting', 'PHP', 'MySQL'],
+      images: [
+        'images/madrasah-melaka.png',
+        'images/madrasah1.png',
+        'images/madrasah2.png',
+        'images/madrasah3.png',
+        'images/madrasah4.png',
+      ],
+      links: [
+        { label: '<i class=\'bx bx-link-external\'></i> Visit Live Site', url: 'https://maimajdarulikhlas.com', type: 'primary' },
+      ]
+    },
+    netsec: {
+      icon: `<i class='bx bx-shield-quarter'></i>`,
+      badge: 'Academic · Security Research',
+      title: 'Network Security Analysis',
+      org: 'Projek Akademik',
+      desc: `Kajian dan analisis kelemahan rangkaian menggunakan tools seperti Wireshark untuk packet capture dan analisis traffic, serta Nmap untuk network scanning dan port enumeration. Laporan merangkumi dokumentasi kelemahan yang ditemui dan cadangan mitigasi terhadap potensi ancaman keselamatan.`,
+      tags: ['Wireshark', 'Nmap', 'Kali Linux', 'Network Security', 'Penetration Testing'],
+      images: [
+        'images/linux1.jpg',
+        'images/linux2.jpg',
+        'images/linux3.jpg',
+      ],
+      links: [
+        /* projek akademik — takde live link, boleh letak PDF report kalau ada */
+        /* { label: '<i class=\'bx bx-file\'></i> View Report', url: '#', type: 'secondary' }, */
+      ]
+    }
+  };
+
+  /* ── DOM refs ── */
+  const overlay   = document.getElementById('proj-modal');
+  const closeBtn  = document.getElementById('proj-modal-close');
+  const modalIcon = document.getElementById('modal-icon');
+  const modalBadge= document.getElementById('modal-badge');
+  const modalTitle= document.getElementById('modal-title');
+  const modalOrg  = document.getElementById('modal-org');
+  const modalDesc = document.getElementById('modal-desc');
+  const modalTags = document.getElementById('modal-tags');
+  const modalLinks= document.getElementById('modal-links');
+  const slider    = document.getElementById('proj-slider');
+  const dotsWrap  = document.getElementById('slider-dots');
+  const btnPrev   = document.getElementById('slider-prev');
+  const btnNext   = document.getElementById('slider-next');
+
+  if (!overlay) return;
+
+  let currentSlide = 0;
+  let totalSlides  = 0;
+
+  /* ── Build slider ── */
+  function buildSlider(images) {
+    slider.innerHTML = '';
+    dotsWrap.innerHTML = '';
+    currentSlide = 0;
+
+    if (!images || images.length === 0) {
+      const ph = document.createElement('div');
+      ph.className = 'proj-slide-placeholder';
+      ph.innerHTML = `<i class='bx bx-image'></i><span>No preview available</span>`;
+      slider.appendChild(ph);
+      btnPrev.style.display = 'none';
+      btnNext.style.display = 'none';
+      dotsWrap.style.display = 'none';
+      totalSlides = 1;
+      return;
+    }
+
+    totalSlides = images.length;
+    btnPrev.style.display = '';
+    btnNext.style.display = '';
+    dotsWrap.style.display = images.length > 1 ? '' : 'none';
+
+    images.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.className = 'proj-slide';
+      img.src = src;
+      img.alt = 'Project screenshot ' + (i + 1);
+      img.loading = 'lazy';
+      slider.appendChild(img);
+
+      if (images.length > 1) {
+        const dot = document.createElement('div');
+        dot.className = 'proj-slider-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(dot);
+      }
+    });
+
+    updateSlider();
+  }
+
+  function goTo(index) {
+    currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
+    updateSlider();
+  }
+
+  function updateSlider() {
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    document.querySelectorAll('.proj-slider-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === currentSlide)
+    );
+    btnPrev.disabled = currentSlide === 0;
+    btnNext.disabled = currentSlide === totalSlides - 1;
+  }
+
+  btnPrev.addEventListener('click', () => goTo(currentSlide - 1));
+  btnNext.addEventListener('click', () => goTo(currentSlide + 1));
+
+  /* ── Open modal ── */
+  function openModal(key) {
+    const data = projectData[key];
+    if (!data) return;
+
+    modalIcon.innerHTML  = data.icon;
+    modalBadge.textContent = data.badge;
+    modalTitle.textContent = data.title;
+    modalOrg.textContent   = data.org;
+    modalDesc.textContent  = data.desc;
+
+    modalTags.innerHTML = data.tags.map(t =>
+      `<span class="tag">${t}</span>`
+    ).join('');
+
+    modalLinks.innerHTML = '';
+    if (data.links && data.links.length > 0) {
+      data.links.forEach(l => {
+        const a = document.createElement('a');
+        a.href = l.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.className = `proj-link-btn ${l.type}`;
+        a.innerHTML = l.label;
+        modalLinks.appendChild(a);
+      });
+    }
+
+    buildSlider(data.images);
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  /* ── Close modal ── */
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft')  goTo(currentSlide - 1);
+    if (e.key === 'ArrowRight') goTo(currentSlide + 1);
+  });
+
+  /* ── Bind buttons ── */
+  document.querySelectorAll('.proj-detail-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      openModal(btn.dataset.project);
+    });
+  });
+
+  /* Card click pun boleh open modal ── */
+  document.querySelectorAll('.project-card[data-project]').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.project));
+  });
+
 })();

@@ -53,9 +53,9 @@
         </button>
 
         <ul class="nav-links" role="list">
-          <li><a href="#about">About</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#about" data-i18n="nav_about">About</a></li>
+          <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
+          <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
           <li>
             <a href="https://github.com/Hanricus"
                target="_blank"
@@ -80,7 +80,7 @@
         <div class="hero-left">
           <div class="hero-tag">
             <span class="hero-tag-dot" aria-hidden="true"></span>
-            Available for opportunities
+            <span data-i18n="hero_tag">Available for opportunities</span>
           </div>
 
           <h1 class="hero-name" id="hero-name">
@@ -88,11 +88,11 @@
             <span class="hero-name-last">Shakir</span>
           </h1>
 
-          <p class="hero-title">
+          <p class="hero-title" data-i18n="hero_title">
             IMS IT · <span>Information Systems</span> · Technician & System Developer
           </p>
 
-          <p class="hero-desc">
+          <p class="hero-desc" data-i18n="hero_desc">
             Dedicated <strong>System Developer</strong> specializing in 
             <span class="hero-tech-tag">PHP</span>,
             <span class="hero-tech-tag">Laravel</span>,
@@ -128,19 +128,19 @@
               <div class="stat-value"
                   data-count="10"
                   data-suffix="+">0</div>
-              <div class="stat-label">Projects Built</div>
+              <div class="stat-label" data-i18n="stat_projects">Projects Built</div>
             </div>
             <div class="stat-item">
               <div class="stat-value"
                   data-count="6"
                   data-suffix=" Months">0</div>
-              <div class="stat-label">Industry Exp.</div>
+              <div class="stat-label" data-i18n="stat_exp">Industry Exp.</div>
             </div>
             <div class="stat-item">
               <div class="stat-value"
                   data-count="7"
                   data-suffix="+">0</div>
-              <div class="stat-label">Tech Stacks</div>
+              <div class="stat-label" data-i18n="stat_stacks">Tech Stacks</div>
             </div>
           </div>
         </div>
@@ -157,11 +157,6 @@
             </div>
 
             <div class="avatar-frame">
-              <!--
-                CARA GUNA GAMBAR SENDIRI:
-                1. Letak gambar ko dalam folder images/ (contoh: images/profile.jpg)
-                2. Uncomment baris <img> di bawah dan comment/remove <div class="avatar-placeholder">
-              -->
               <img src="images/Shakir.jpg" alt="Abd Shakir" class="avatar-img" />
 
             </div>
@@ -180,7 +175,7 @@
             </div>
 
             <div class="avatar-badge badge-top-left">
-              <span class="avatar-badge-icon"><i class='bx bxs-flame'></i></span> System Dev
+              <span class="avatar-badge-icon"><i class='bx bxs-flame'></i></span> PHP System Dev
             </div>
 
           </div>
@@ -203,9 +198,9 @@
 
     <section id="about" class="section" aria-labelledby="about-title">
       <div class="section-header reveal">
-        <div class="section-tag">01 — About Me</div>
-        <h2 class="section-title" id="about-title">
-          Who is <span>Abd Shakir</span>?
+        <div class="section-tag" data-i18n="section_about_tag">01 — About Me</div>
+        <h2 class="section-title" data-i18n="section_about_title" id="about-title">
+          Who is Me? <span>Abdul Shakir</span>?
         </h2>
       </div>
 
@@ -215,19 +210,19 @@
         <div class="about-identity reveal reveal-delay-1">
 
           <div class="identity-card">
-            <div class="identity-label">Current Status</div>
-            <div class="identity-value">Postgraduate Student</div>
-            <div class="identity-sub">Master of Science in Information Technology</div>
+            <div class="identity-label" data-i18n="about_status_label">Current Status</div>
+            <div class="identity-value" data-i18n="about_status_value">Postgraduate Student</div>
+            <div class="identity-sub" data-i18n="about_status_sub">Master of Science in Information Technology</div>
           </div>
 
           <div class="identity-card">
-            <div class="identity-label">Education</div>
+            <div class="identity-label" data-i18n="about_edu_label">Education</div>
             <ul class="edu-list">
               <li class="edu-item">
                 <div class="edu-dot"></div>
                 <div>
                   <div class="edu-degree">MSc Information Technology</div>
-                  <div class="edu-school">UiTM Shah Alam · 2024 – Present</div>
+                  <div class="edu-school">UiTM Shah Alam · 2026 – Present</div>
                 </div>
               </li>
               <li class="edu-item">
@@ -237,65 +232,116 @@
                   <div class="edu-school">UiTM Machang · Completed</div>
                 </div>
               </li>
+              <li class="edu-item">
+                <div class="edu-dot"></div>
+                <div>
+                  <div class="edu-degree">Diploma in Information Management</div>
+                  <div class="edu-school">UiTM Sungai Petani · Completed</div>
+                </div>
+              </li>
             </ul>
           </div>
 
           <!-- Experience -->
           <div class="identity-card">
-            <div class="identity-label">Experience</div>
+            <div class="identity-label" data-i18n="about_exp_label">Experience</div>
+
             <div class="exp-item">
-              <div class="exp-icon-wrap">⚓</div>
+              <div class="exp-icon-wrap"><i class='bx bx-anchor'></i></div>
               <div class="exp-content">
-                <div class="exp-role">IT Intern — Information Systems Dept.</div>
+                <div class="exp-role" data-i18n="exp1_role">IT Intern — Information Systems Dept.</div>
                 <div class="exp-company">Lumut Naval Shipyard (LUNAS)</div>
                 <div class="exp-duration">Industrial Training</div>
-                <div class="exp-desc">
-                  Hands-on experience in naval IS operations, system maintenance, and
-                  internal IT infrastructure support.
+                <div class="exp-desc" data-i18n="exp1_desc">
+                  Hands-on experience in naval IS operations, system maintenance, and internal IT infrastructure support.
                 </div>
               </div>
             </div>
+
+            <div class="exp-item">
+              <div class="exp-icon-wrap"><i class='bx bxl-wordpress'></i></div>
+              <div class="exp-content">
+                <div class="exp-role" data-i18n="exp2_role">Freelance Web Developer</div>
+                <div class="exp-company" data-i18n="exp2_company">Independent Project</div>
+                <div class="exp-duration" data-i18n="exp2_duration">Project-Based</div>
+                <div class="exp-desc" data-i18n="exp2_desc">
+                  Developed and deployed a Content Management System (WordPress) for a local Madrasah. Managed domain setup, theme customization, and structured the digital content architecture.
+                </div>
+              </div>
+            </div>
+
+            <div class="exp-item">
+              <div class="exp-icon-wrap"><i class='bx bxl-tux'></i></div>
+              <div class="exp-content">
+                <div class="exp-role" data-i18n="exp3_role">System Developer & Administrator</div>
+                <div class="exp-company" data-i18n="exp3_company">Solo Projects</div>
+                <div class="exp-duration" data-i18n="exp3_duration">Continuous</div>
+                <div class="exp-desc" data-i18n="exp3_desc">
+                  Operated various Linux environments (Kali, Mint) for local server deployment and testing. Built full-stack applications utilizing PHP, Laravel, and customized local development stacks.
+                </div>
+              </div>
+            </div>
+
           </div>
 
         </div>
 
         <!-- Text & Skills -->
         <div class="about-text reveal reveal-delay-2">
-          <p>
-            Saya <strong>Abd Shakir bin Sabri</strong>, seorang graduan IT yang
-            passionate dalam bidang pembangunan sistem
-            maklumat. Kini melanjutkan pengajian peringkat Sarjana di
-            <strong>UiTM Shah Alam</strong>.
+          <p data-i18n="about_p1">
+            Saya <strong>Abdul Shakir Hakim</strong>, seorang graduan <strong>Pengurusan Sistem Maklumat</strong> yang memfokuskan kepada pembangunan sistem logik dan infrastruktur digital. Selepas menamatkan ijazah sarjana muda, saya kini sedang melanjutkan pengajian di peringkat Sarjana (MSc in Information Technology) di <strong>UiTM Shah Alam</strong> untuk mendalami selok-belok pengurusan data dan seni bina sistem peringkat tinggi.
           </p>
-          <p>
-            Pengalaman praktikal di <strong>Lumut Naval Shipyard (LUNAS)</strong>
-            memberi saya pendedahan kepada persekitaran IT yang kritikal dan
-            berdisiplin tinggi — pengalaman yang membentuk cara saya berfikir
-            tentang keselamatan dan kebolehpercayaan sistem.
+          <p data-i18n="about_p2">
+            Pengalaman praktikal di jabatan Information Systems, <strong>Lumut Naval Shipyard (LUNAS)</strong> telah mendedahkan saya kepada operasi IT gred industri. Persekitaran kerja yang kritikal dan berdisiplin tinggi di pangkalan tentera laut tersebut membentuk standard saya dalam memastikan setiap aplikasi yang dibangunkan mempunyai tahap kebolehpercayaan, prestasi, dan keselamatan yang ketat sebelum digunakan.
           </p>
-          <p>
-            Saya percaya bahawa teknologi bukan sekadar alat — ia adalah bahasa
-            baharu untuk menyelesaikan masalah dunia sebenar.
+          <p data-i18n="about_p3">
+            Selain ekosistem korporat, saya aktif membina dan menyelenggara sistem secara peribadi, dari pembangunan web penuh (full-stack) hingga ke konfigurasi pelayan (server) Linux. Dalam aliran kerja moden, saya turut mengaplikasikan kepakaran sebagai <strong>Pakar Prom (Prompt Engineer)</strong>. Saya mengintegrasikan bantuan AI secara strategik untuk mempercepatkan penulisan kod, mengoptimumkan logik, dan menyelesaikan ralat (debugging). Ini memastikan proses pembangunan sistem menjadi jauh lebih efisien berbanding kaedah pengekodan manual tradisional.
           </p>
+        
 
-          <!-- Skills -->
           <div class="skills-block">
-            <div class="skills-title">Tech Stack &amp; Tools</div>
+            <div class="skills-title" data-i18n="skills_title">Tech Stack &amp; Tools</div>
             <div class="skills-grid">
-              <span class="skill-pill"><span class="skill-pill-icon">🐘</span>PHP</span>
-              <span class="skill-pill"><span class="skill-pill-icon">🔴</span>Laravel</span>
-              <span class="skill-pill"><span class="skill-pill-icon">🗄️</span>MySQL</span>
-              <span class="skill-pill"><span class="skill-pill-icon">🌐</span>JavaScript</span>
-              <span class="skill-pill"><span class="skill-pill-icon">⚛️</span>HTML/CSS</span>
-              <span class="skill-pill"><span class="skill-pill-icon">🐍</span>Python</span>
-              <span class="skill-pill"><span class="skill-pill-icon">🔒</span>Basic Cybersecurity</span>
-              <span class="skill-pill"><span class="skill-pill-icon">🌐</span>Network Admin</span>
-              <span class="skill-pill"><span class="skill-pill-icon">🐙</span>Git / GitHub</span>
-              <span class="skill-pill"><span class="skill-pill-icon">🐧</span>Linux</span>
-              <span class="skill-pill"><span class="skill-pill-icon">📊</span>Sys Analysis</span>
+              <span class="skill-pill highlight" data-level="89" data-desc="Native backend coding, session handling, form processing, dan troubleshooting guna error_reporting."><span class="skill-pill-icon"><i class='bx bxl-php'></i></span>PHP</span>
+              
+              <span class="skill-pill highlight" data-level="85" data-desc="MVC architecture, routing, migrations, dan debugging sistem secara terperinci membaca fail laravel.log."><span class="skill-pill-icon"><i class='bx bxs-flame'></i></span>Laravel</span>
+              
+              <span class="skill-pill highlight" data-level="82" data-desc="Table design, raw SQL queries, pengurusan phpMyAdmin, dan penyelesaian isu database connection."><span class="skill-pill-icon"><i class='bx bxs-data'></i></span>MySQL</span>
+              
+              <span class="skill-pill highlight" data-level="90" data-desc="Menggunakan AI untuk menjana kod, mencari punca ralat (debugging), dan mempercepatkan proses development."><span class="skill-pill-icon"><i class='bx bx-brain'></i></span>Prompt Engineering</span>
+              
+              <span class="skill-pill highlight" data-level="67" data-desc="Client-side scripting, form validation, AJAX, dan debug ralat DOM melalui browser console."><span class="skill-pill-icon"><i class='bx bxl-javascript'></i></span>JavaScript</span>
+
+              <span class="skill-pill" data-level="54" data-desc="Test endpoint guna Postman, handle output JSON, dan troubleshoot isu API connection/response."><span class="skill-pill-icon"><i class='bx bx-plug'></i></span>REST API</span>
+              
+              <span class="skill-pill" data-level="72" data-desc="Rapid UI prototyping guna grid system, pre-built components, dan override default class CSS."><span class="skill-pill-icon"><i class='bx bxl-bootstrap'></i></span>Bootstrap</span>
+              
+              <span class="skill-pill" data-level="80" data-desc="Page structuring, UI styling, dan selesaikan masalah layout website menggunakan Inspect Element."><span class="skill-pill-icon"><i class='bx bxl-html5'></i></span>HTML/CSS</span>
+              
+              <span class="skill-pill" data-level="66" data-desc="Basic scripting untuk simple automation, data handling, dan menyelesaikan syntax errors."><span class="skill-pill-icon"><i class='bx bxl-python'></i></span>Python</span>
+              
+              <span class="skill-pill" data-level="70" data-desc="Manage hosting (cPanel/FTP), setup live database, upload file projek, dan fix live server error."><span class="skill-pill-icon"><i class='bx bx-server'></i></span>Server Deployment</span>
+              
+              <span class="skill-pill" data-level="68" data-desc="Physical setup (crimping kabel RJ45), guna network cable tester, ping test, dan troubleshoot LAN/IP."><span class="skill-pill-icon"><i class='bx bx-network-chart'></i></span>Network Admin</span>
+              
+              <span class="skill-pill" data-level="76" data-desc="Push/pull code, clone repo projek, urus branch, dan track sejarah perubahan kod sistem."><span class="skill-pill-icon"><i class='bx bxl-github'></i></span>Git / GitHub</span>
+              
+              <span class="skill-pill" data-level="33" data-desc="Navigasi CLI (Kali/Mint), urus file permissions (chmod), run command asas, dan semak system logs."><span class="skill-pill-icon"><i class='bx bxl-tux'></i></span>Linux</span>
+              
+              <span class="skill-pill" data-level="61" data-desc="Kumpul requirement, sketch system flow, dan rancang struktur asas database sebelum mula coding."><span class="skill-pill-icon"><i class='bx bx-bar-chart-alt-2'></i></span>Sys Analysis</span>
+            </div>
+
+            <div class="skill-detail" id="skill-detail" aria-live="polite">
+              <div class="skill-detail-header">
+                <span class="skill-detail-name" id="skill-detail-name"></span>
+                <span class="skill-detail-pct" id="skill-detail-pct"></span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" id="skill-bar-fill"></div>
+              </div>
+              <p class="skill-detail-desc" id="skill-detail-desc"></p>
             </div>
           </div>
-
         </div>
 
       </div>
@@ -310,91 +356,116 @@
     <section id="projects" class="section" aria-labelledby="projects-title">
       <div class="section-header reveal">
         <div class="section-tag">02 — Projects</div>
-        <h2 class="section-title" id="projects-title">
-          Featured <span>Work</span>
-        </h2>
+        <h2 class="section-title" id="projects-title">Featured <span>Work</span></h2>
       </div>
 
       <div class="projects-grid">
 
-        <!-- Featured Project -->
-        <article class="project-card featured reveal">
+        <article class="project-card featured reveal" data-project="lunas">
           <div class="featured-left">
-            <div class="featured-badge">
-              ⭐ Featured Project
-            </div>
+            <div class="featured-badge" data-i18n="featured_badge"><i class='bx bxs-star'></i> Featured Project</div>
             <div class="project-header" style="margin-bottom:16px">
-              <div class="project-icon" style="font-size:1.8rem">🛒</div>
-              <span class="project-arrow">↗</span>
+              <div class="project-icon" style="font-size:1.8rem"><i class='bx bx-cart-alt'></i></div>
             </div>
-            <h3 class="project-title">LUNAS E-Shop System</h3>
-            <p class="project-desc">
-              Sistem e-commerce dalaman yang dibangunkan khusus untuk keperluan
-              Lumut Naval Shipyard. Membolehkan pengurusan katalog produk,
-              pesanan, dan rekod transaksi secara digital — menggantikan proses
-              manual yang tidak efisien.
-            </p>
+            <h3 class="project-title" data-i18n="proj_lunas_title">LUNAS E-Shop System</h3>
+            <p class="project-desc" data-i18n="proj_lunas_desc">Sistem e-commerce dalaman untuk Lumut Naval Shipyard — pengurusan katalog, pesanan, dan transaksi secara digital.</p>
             <div class="project-tags">
               <span class="tag">PHP</span>
               <span class="tag">Laravel</span>
               <span class="tag">MySQL</span>
-              <span class="tag">Blade</span>
               <span class="tag">Bootstrap</span>
             </div>
           </div>
           <div class="featured-right">
-            <div style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.15);border-radius:12px;padding:20px;text-align:center;">
-              <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);margin-bottom:8px;letter-spacing:.1em;text-transform:uppercase">Project Type</div>
-              <div style="font-size:0.9rem;color:var(--text-secondary)">Industrial Internship</div>
-              <div style="margin-top:16px;font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Organisation</div>
-              <div style="font-size:0.85rem;color:var(--accent-purple);margin-top:4px">LUNAS · Lumut</div>
+            <div class="project-image-wrapper">
+              <img src="images/lunas-eshop.png" alt="LUNAS E-Shop" class="project-screenshot">
             </div>
+            <div class="proj-meta-box">
+              <div class="proj-meta-item">
+                <span class="proj-meta-label">Type</span>
+                <span class="proj-meta-val" data-i18n="proj_lunas_meta_type">Industrial Internship</span>
+              </div>
+              <div class="proj-meta-item">
+                <span class="proj-meta-label">Org</span>
+                <span class="proj-meta-val" style="color:var(--accent-purple)" data-i18n="proj_lunas_meta_org">LUNAS · Lumut</span>
+              </div>
+            </div>
+            <button class="proj-detail-btn" data-project="lunas"><i class='bx bx-info-circle'></i> <span data-i18n="proj_detail_btn">View Details</span></button>
           </div>
         </article>
 
-        <!-- Project 2 -->
-        <article class="project-card reveal reveal-delay-1">
+        <article class="project-card reveal reveal-delay-1" data-project="madrasah">
           <div class="project-header">
-            <div class="project-icon">🔍</div>
-            <span class="project-arrow">↗</span>
+            <div class="project-icon"><i class='bx bx-book-reader'></i></div>
+            <span class="proj-status online"><i class='bx bx-globe'></i> Live</span>
           </div>
-          <h3 class="project-title">Mini-Turnitin Tool</h3>
-          <p class="project-desc">
-            Alat pengesan plagiarisme dan kandungan AI yang dibangunkan untuk
-            kegunaan peribadi dan akademik. Memfokuskan kepada integriti
-            akademik dengan membandingkan teks terhadap sumber-sumber luar
-            melalui integrasi API.
-          </p>
+          <div class="project-image-wrapper-small">
+            <img src="images/madrasah-melaka.png" alt="Madrasah Website" class="project-screenshot">
+          </div>
+          <h3 class="project-title" data-i18n="proj_madrasah_title">Madrasah CMS Portal</h3>
+          <p class="project-desc" data-i18n="proj_madrasah_desc">Platform CMS untuk institusi Madrasah — pengurusan kandungan, kos operasi dan maklumat awam secara mandiri.</p>
           <div class="project-tags">
-            <span class="tag">Laravel</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">REST API</span>
-            <span class="tag">NLP</span>
+            <span class="tag">WordPress</span>
+            <span class="tag">CMS</span>
+            <span class="tag">Web Hosting</span>
           </div>
+          <button class="proj-detail-btn" data-project="madrasah" style="margin-top:16px">
+            <i class='bx bx-info-circle'></i> <span data-i18n="proj_detail_btn">View Details</span>
+          </button>
         </article>
 
-        <!-- Project 3 -->
-        <article class="project-card reveal reveal-delay-2">
+        <article class="project-card reveal reveal-delay-2" data-project="netsec">
           <div class="project-header">
-            <div class="project-icon">🛡️</div>
-            <span class="project-arrow">↗</span>
+            <div class="project-icon"><i class='bx bx-shield-quarter'></i></div>
+            <span class="proj-status offline"><i class='bx bx-folder'></i> Academic</span>
           </div>
-          <h3 class="project-title">Network Security Analysis</h3>
-          <p class="project-desc">
-            Kajian dan analisis kelemahan rangkaian menggunakan tools
-            seperti Wireshark dan Nmap. Sebahagian daripada kajian
-            cybersecurity peringkat Sarjana — mengenal pasti, mendokumentasi,
-            dan mencadangkan mitigasi terhadap potensi ancaman.
-          </p>
+          <div class="project-image-wrapper-small">
+            <img src="images/Linux1.jpg" alt="Network Analysis" class="project-screenshot">
+          </div>
+          <h3 class="project-title" data-i18n="proj_netsec_title">Network Security Analysis</h3>
+          <p class="project-desc" data-i18n="proj_netsec_desc">Analisis kelemahan rangkaian menggunakan Wireshark dan Nmap — kenal pasti, dokumentasi, dan cadangan mitigasi ancaman.</p>
           <div class="project-tags">
             <span class="tag">Wireshark</span>
             <span class="tag">Nmap</span>
             <span class="tag">Kali Linux</span>
-            <span class="tag">Research</span>
           </div>
+          <button class="proj-detail-btn" data-project="netsec" style="margin-top:16px">
+            <i class='bx bx-info-circle'></i> <span data-i18n="proj_detail_btn">View Details</span>
+          </button>
         </article>
 
       </div>
+    </section>
+
+    <!-- PROJECT MODAL OVERLAY -->
+    <div id="proj-modal" class="proj-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="proj-modal-box">
+        <button class="proj-modal-close" id="proj-modal-close" aria-label="Close"><i class='bx bx-x'></i></button>
+
+        <div class="proj-modal-header">
+          <div class="proj-modal-icon" id="modal-icon"></div>
+          <div>
+            <div class="proj-modal-badge" id="modal-badge"></div>
+            <h3 class="proj-modal-title" id="modal-title"></h3>
+            <div class="proj-modal-org" id="modal-org"></div>
+          </div>
+        </div>
+
+        <!-- Image Slider -->
+        <div class="proj-slider-wrap">
+          <div class="proj-slider" id="proj-slider"></div>
+          <button class="proj-slider-btn prev" id="slider-prev" aria-label="Previous"><i class='bx bx-chevron-left'></i></button>
+          <button class="proj-slider-btn next" id="slider-next" aria-label="Next"><i class='bx bx-chevron-right'></i></button>
+          <div class="proj-slider-dots" id="slider-dots"></div>
+        </div>
+
+        <p class="proj-modal-desc" id="modal-desc"></p>
+
+        <div class="proj-modal-tags" id="modal-tags"></div>
+
+        <div class="proj-modal-links" id="modal-links"></div>
+      </div>
+    </div>
     </section>
 
 
@@ -414,39 +485,38 @@
       <div class="contact-wrapper">
 
         <div class="contact-info reveal reveal-delay-1">
-          <p class="contact-desc">
-            Sama ada untuk peluang kerja, kolaborasi projek, atau sekadar
-            berbual tentang IT — inbox saya sentiasa terbuka.
+          <p class="contact-desc" data-i18n="contact_desc">
+            Sama ada untuk peluang kerja, kolaborasi projek, atau perbincangan teknikal berkaitan pembangunan sistem dan IT — inbox saya sentiasa terbuka.
           </p>
 
           <div class="contact-links">
             <a href="https://github.com/Hanricus"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="contact-link">
-              <div class="contact-link-icon">🐙</div>
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact-link">
+              <div class="contact-link-icon"><i class='bx bxl-github'></i></div>
               <div class="contact-link-text">
                 <div class="contact-link-label">GitHub</div>
                 <div class="contact-link-value">github.com/Hanricus</div>
               </div>
             </a>
 
-            <a href="https://www.linkedin.com/in/abd-shakir"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="contact-link">
-              <div class="contact-link-icon">💼</div>
+            <a href="https://www.linkedin.com/in/abdulshakirhakim"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="contact-link">
+              <div class="contact-link-icon"><i class='bx bxl-linkedin'></i></div>
               <div class="contact-link-text">
                 <div class="contact-link-label">LinkedIn</div>
-                <div class="contact-link-value">linkedin.com/in/abd-shakir</div>
+                <div class="contact-link-value">linkedin.com/in/abdulshakirhakim</div>
               </div>
             </a>
 
-            <a href="mailto:abdshakir@example.com" class="contact-link">
-              <div class="contact-link-icon">✉️</div>
+            <a href="mailto:shakim731@gmail.com" class="contact-link">
+              <div class="contact-link-icon"><i class='bx bx-envelope'></i></div>
               <div class="contact-link-text">
                 <div class="contact-link-label">Email</div>
-                <div class="contact-link-value">abdshakir@example.com</div>
+                <div class="contact-link-value">shakim731@gmail.com</div>
               </div>
             </a>
           </div>
@@ -483,8 +553,9 @@
               <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:.1em;
                            text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Interest Areas</div>
               <div style="color:var(--text-secondary);font-size:.88rem;line-height:1.6">
-                Cybersecurity · Information Systems<br/>
-                Network Security · Web Development
+                Basic Cybersecurity · Information Systems<br/>
+                Basic Network Security · Web Development <br/>
+                System Development . Human Resource Information System (HRIS)
               </div>
             </div>
           </div>
@@ -517,5 +588,6 @@
 
   <!-- JavaScript -->
   <script src="js/main.js" defer></script>
+  <script src="js/translator.js" defer></script>
 </body>
 </html>

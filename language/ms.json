@@ -1,0 +1,19 @@
+{
+  "nav_about": "Tentang",
+  "nav_projects": "Projek",
+  "nav_contact": "Hubungi",
+  "hero_tag": "Terbuka untuk peluang kerja",
+  "hero_title": "IMS IT · Sistem Maklumat · Juruteknik & Pembangun Sistem",
+  "hero_desc": "Seorang <strong>Pembangun Sistem</strong> yang berpengalaman dalam <span class='hero-tech-tag'>PHP</span>, <span class='hero-tech-tag'>Laravel</span>, <span class='hero-tech-tag'>JavaScript</span>. Fokus membina penyelesaian digital yang kukuh dan aplikasi enterprise berskala.<br><br>Sedang melanjutkan pengajian <strong>Pasca Siswazah</strong> di <strong>UiTM Shah Alam</strong> dalam bidang <strong>Teknologi Maklumat</strong> untuk mendalami seni bina sistem maklumat.",
+  "hero_btn_projects": "Lihat Projek",
+  "hero_btn_contact": "Hubungi Saya",
+  "stat_projects": "Projek Dibina",
+  "stat_exp": "Pengalaman Industri",
+  "stat_stacks": "Tumpukan Teknologi",
+  "section_about_tag": "01 — Tentang Saya",
+  "section_about_title": "Siapa <span>Abdul Shakir</span>?",
+  "section_projects_tag": "02 — Projek",
+  "section_projects_title": "<span>Kerja</span> Terpilih",
+  "section_contact_tag": "03 — Hubungi",
+  "section_contact_title": "Jom <span>Berhubung</span>"
+}
