@@ -249,29 +249,6 @@
 
   let currentLang = localStorage.getItem('portfolio-lang') || DEFAULT;
 
-  // ── Build UI Button ──────────────────────
-  const wrapper = document.createElement('div');
-  wrapper.id = 'lang-switcher';
-  wrapper.innerHTML = `
-    <button id="lang-btn" aria-label="Switch Language" title="Switch Language">
-      <i class='bx bx-globe'></i>
-      <span id="lang-current">${LABELS[currentLang]}</span>
-      <i class='bx bx-chevron-up' id="lang-chevron"></i>
-    </button>
-    <div id="lang-dropdown" role="listbox" aria-label="Language options">
-      ${SUPPORTED.map(lang => `
-        <button class="lang-option ${lang === currentLang ? 'active' : ''}"
-                data-lang="${lang}"
-                role="option"
-                aria-selected="${lang === currentLang}">
-          ${LABELS[lang]}
-        </button>
-      `).join('')}
-    </div>
-  `;
-
-  document.body.appendChild(wrapper);
-
   // ── CSS inject (elak tambah file baru) ──
   const style = document.createElement('style');
   style.textContent = `
@@ -386,19 +363,6 @@
   loading.innerHTML = `<i class='bx bx-loader-alt bx-spin'></i> &nbsp;Loading...`;
   document.body.appendChild(loading);
 
-  // ── Toggle dropdown ──────────────────────
-  const langBtn      = document.getElementById('lang-btn');
-  const langDropdown = document.getElementById('lang-dropdown');
-
-  langBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    wrapper.classList.toggle('open');
-  });
-
-  document.addEventListener('click', e => {
-    if (!wrapper.contains(e.target)) wrapper.classList.remove('open');
-  });
-
 // ── Apply language ───────────────────────
   function applyLang(data) {
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -425,6 +389,32 @@
 
     wrapper.classList.remove('open');
   }
+
+  // Populate lang panel inside AssistiveTouch (wait for AT to render)
+  function populateLangPanel() {
+    const panel = document.getElementById('at-lang-panel');
+    if (!panel) return;
+    // Clear existing options (keep title)
+    panel.querySelectorAll('.at-lang-option').forEach(el => el.remove());
+
+    SUPPORTED.forEach(lang => {
+      const btn = document.createElement('button');
+      btn.className = 'at-lang-option' + (lang === currentLang ? ' active' : '');
+      btn.dataset.lang = lang;
+      btn.innerHTML = LABELS[lang];
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        switchLang(lang);
+        // Update active state
+        panel.querySelectorAll('.at-lang-option').forEach(b =>
+          b.classList.toggle('active', b.dataset.lang === lang)
+        );
+      });
+      panel.appendChild(btn);
+    });
+  }
+
+  setTimeout(populateLangPanel, 150);
 
   // Bind option buttons
   document.querySelectorAll('.lang-option').forEach(btn => {

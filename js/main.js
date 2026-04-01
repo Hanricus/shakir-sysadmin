@@ -336,157 +336,374 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 })();
 
-
 /* ══════════════════════════════════════════════
-   ACCESSIBILITY PANEL (DKU Mode 🦾)
+   ASSISTIVE TOUCH — iOS-style Floating Menu
 ══════════════════════════════════════════════ */
-(function initA11yPanel() {
+(function initAssistiveTouch() {
 
-  // ── Build HTML ──
-  const btn = document.createElement('button');
-  btn.id = 'a11y-btn';
-  btn.setAttribute('aria-label', 'Accessibility Settings');
-  btn.setAttribute('title', 'Accessibility / DKU Mode');
-  btn.innerHTML = `<i class='bx bx-rocket'></i>`;
-
-  const panel = document.createElement('div');
-  panel.id = 'a11y-panel';
-  panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-label', 'Accessibility Settings');
-  panel.innerHTML = `
-    <div class="a11y-panel-title"><i class='bx bx-slider-alt'></i> DKU Accessibility</div>
-
-    <div class="a11y-row">
-      <span class="a11y-label"><i class='bx bx-run'></i> Reduced Motion</span>
-      <label class="a11y-toggle">
-        <input type="checkbox" id="toggle-motion">
-        <span class="a11y-slider"></span>
-      </label>
-    </div>
-
-    <div class="a11y-row">
-      <span class="a11y-label"><i class='bx bx-sun'></i> High Contrast</span>
-      <label class="a11y-toggle">
-        <input type="checkbox" id="toggle-contrast">
-        <span class="a11y-slider"></span>
-      </label>
-    </div>
-
-    <div class="a11y-row">
-      <span class="a11y-label"><i class='bx bx-pause-circle'></i> Pause Particles</span>
-      <label class="a11y-toggle">
-        <input type="checkbox" id="toggle-particles">
-        <span class="a11y-slider"></span>
-      </label>
-    </div>
-
-    <div style="border-top:1px solid var(--border-subtle);padding-top:12px">
-      <div class="a11y-label" style="margin-bottom:8px"><i class='bx bx-text'></i> Font Size</div>
-      <input type="range" class="a11y-font-slider" id="font-slider"
-             min="90" max="130" step="5" value="100">
-      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);
-                  text-align:right;margin-top:4px" id="font-slider-label">100%</div>
-    </div>
-  `;
-
-  // ── Notification hint ──
-  const hint = document.createElement('div');
-  hint.id = 'a11y-hint';
-  hint.innerHTML = `<i class='bx bx-zap'></i> Lagging? Tap to optimize`;
-
-  document.body.appendChild(panel);
-  document.body.appendChild(btn);
-  document.body.appendChild(hint);
-
-  // Show hint after 3s, hide after 6s — only on first visit
-  if (!localStorage.getItem('a11y-hint-seen')) {
-    setTimeout(() => hint.classList.add('show'), 3000);
-    setTimeout(() => {
-      hint.classList.remove('show');
-      localStorage.setItem('a11y-hint-seen', '1');
-    }, 9000);
-  }
-
-  // ── Toggle panel ──
-  let ignoreNextDoc = false;
-
-  btn.addEventListener('pointerup', e => {
-    e.stopPropagation();
-    ignoreNextDoc = true;
-    panel.classList.toggle('open');
-    hint.classList.remove('show');
-    // Reset flag lepas event cycle habis
-    setTimeout(() => { ignoreNextDoc = false; }, 10);
-  });
-
-  // Close if tap/click outside — guna flag supaya tak close terus masa toggle
-  document.addEventListener('pointerup', e => {
-    if (ignoreNextDoc) return;
-    if (!panel.contains(e.target) && e.target !== btn) {
-      panel.classList.remove('open');
-    }
-  });
-
-  // ── Load saved preferences ──
+  /* ── A11Y PREFS ── */
   const prefs = JSON.parse(localStorage.getItem('a11y-prefs') || '{}');
 
   function applyPrefs() {
     document.body.classList.toggle('reduced-motion', !!prefs.motion);
     document.body.classList.toggle('high-contrast',  !!prefs.contrast);
-
-    // Canvas off kalau either reduced-motion OR pause-particles aktif
     const canvas = document.getElementById('particle-canvas');
     if (canvas) canvas.style.display = (prefs.motion || prefs.particles) ? 'none' : '';
-
     document.documentElement.style.fontSize = (prefs.fontSize || 100) + '%';
-    document.getElementById('toggle-motion').checked    = !!prefs.motion;
-    document.getElementById('toggle-contrast').checked  = !!prefs.contrast;
-    document.getElementById('toggle-particles').checked = !!prefs.particles;
-    document.getElementById('font-slider').value        = prefs.fontSize || 100;
-    document.getElementById('font-slider-label').textContent = (prefs.fontSize || 100) + '%';
   }
-
   applyPrefs();
 
-  function save() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches && !prefs.hasOwnProperty('motion')) {
+    prefs.motion = true; applyPrefs();
     localStorage.setItem('a11y-prefs', JSON.stringify(prefs));
   }
 
-  document.getElementById('toggle-motion').addEventListener('change', e => {
+  /* ── BUILD DOM ── */
+  const backdrop = document.createElement('div');
+  backdrop.id = 'at-backdrop';
+  document.body.appendChild(backdrop);
+
+  // Root draggable container
+  const root = document.createElement('div');
+  root.id = 'at-root';
+  document.body.appendChild(root);
+
+  // Main button
+  const btn = document.createElement('button');
+  btn.id = 'at-btn';
+  btn.setAttribute('aria-label', 'Quick Settings');
+  btn.innerHTML = `
+    <div class="at-grid">
+      ${Array(9).fill('<span></span>').join('')}
+    </div>
+    <div class="at-close-icon"><i class='bx bx-x'></i></div>
+  `;
+  root.appendChild(btn);
+
+  /* ── ARC ITEMS DATA ── */
+  const items = [
+    { id: 'lang',     icon: 'bx bx-globe',        label: 'Lang',   tooltip: 'Language' },
+    { id: 'a11y',     icon: 'bx bx-slider-alt',   label: 'Optim',  tooltip: 'Accessibility' },
+    { id: 'particles',icon: 'bx bx-stars',         label: 'FX',     tooltip: 'Toggle Particles' },
+    { id: 'top',      icon: 'bx bx-up-arrow-alt',  label: 'Top',    tooltip: 'Back to Top' },
+  ];
+
+  const itemEls = [];
+
+  items.forEach(data => {
+    const el = document.createElement('button');
+    el.className = 'at-item';
+    el.dataset.id = data.id;
+    el.setAttribute('aria-label', data.tooltip);
+    el.innerHTML = `
+      <i class='${data.icon}'></i>
+      <span class="at-item-label">${data.label}</span>
+      <span class="at-tooltip">${data.tooltip}</span>
+    `;
+    root.appendChild(el);
+    itemEls.push(el);
+  });
+
+  /* ── SUB PANELS ── */
+  // A11y panel
+  const a11yPanel = document.createElement('div');
+  a11yPanel.id = 'at-a11y-panel';
+  a11yPanel.innerHTML = `
+    <div class="at-panel-title"><i class='bx bx-slider-alt'></i> Accessibility</div>
+    <div class="a11y-row">
+      <span class="a11y-label"><i class='bx bx-run'></i> Reduced Motion</span>
+      <label class="a11y-toggle"><input type="checkbox" id="at-toggle-motion"><span class="a11y-slider"></span></label>
+    </div>
+    <div class="a11y-row">
+      <span class="a11y-label"><i class='bx bx-sun'></i> High Contrast</span>
+      <label class="a11y-toggle"><input type="checkbox" id="at-toggle-contrast"><span class="a11y-slider"></span></label>
+    </div>
+    <div style="border-top:1px solid var(--border-subtle);padding-top:12px">
+      <div class="a11y-label" style="margin-bottom:8px"><i class='bx bx-text'></i> Font Size</div>
+      <input type="range" class="a11y-font-slider" id="at-font-slider" min="90" max="130" step="5" value="100">
+      <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted);text-align:right;margin-top:4px" id="at-font-label">100%</div>
+    </div>
+  `;
+  document.body.appendChild(a11yPanel);
+
+  // Lang panel
+  const langPanel = document.createElement('div');
+  langPanel.id = 'at-lang-panel';
+  langPanel.innerHTML = `<div class="at-panel-title"><i class='bx bx-globe'></i> Language</div>`;
+  document.body.appendChild(langPanel);
+
+  /* ── OPEN / CLOSE ARC ── */
+  let isOpen = false;
+
+  // Arc angles — spread upward-left from bottom-right button
+  // Angles in degrees: 0 = right, 90 = up, 180 = left
+ const arcAngles = [65, 30, -5, -40]; // semua ke kiri-atas
+  const arcRadius = 100; // lebih jauh supaya tak rapat
+
+  function openArc() {
+    isOpen = true;
+    btn.classList.add('open');
+    backdrop.classList.add('open');
+
+    itemEls.forEach((el, i) => {
+      const angle = arcAngles[i] * (Math.PI / 180);
+      const tx = -Math.cos(angle) * arcRadius - 23;
+      const ty = -Math.sin(angle) * arcRadius - 23;
+      // Small delay per item for stagger effect
+      setTimeout(() => {
+        el.style.transform = `translate(${tx}px, ${ty}px) scale(1)`;
+        el.classList.add('visible');
+      }, i * 40);
+    });
+  }
+
+  function closeArc() {
+    isOpen = false;
+    btn.classList.remove('open');
+    backdrop.classList.remove('open');
+
+    itemEls.forEach(el => {
+      el.style.transform = '';
+      el.classList.remove('visible');
+    });
+
+    // Close sub panels too
+    a11yPanel.classList.remove('open');
+    langPanel.classList.remove('open');
+  }
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    if (!isDragging) isOpen ? closeArc() : openArc();
+  });
+
+  backdrop.addEventListener('click', closeArc);
+
+  /* ── POSITION SUB PANELS ── */
+  // LABEL: positionPanel — letak sub-panel elak bertindih
+  function positionPanel(panel) {
+    const rootRect = root.getBoundingClientRect();
+    const pw = 240;
+    const ph = panel.scrollHeight || 220;
+
+    // Letak panel kat kiri button, align atas
+    let left = rootRect.left - pw - 16;
+    let top  = rootRect.top;
+
+    // Kalau terlalu ke kiri (luar viewport), flip ke kanan
+    if (left < 8) left = rootRect.right + 16;
+
+    // Kalau panel terkeluar bawah viewport, angkat ke atas
+    if (top + ph > window.innerHeight - 8) {
+      top = window.innerHeight - ph - 8;
+    }
+
+    // Jangan terkeluar atas viewport
+    if (top < 8) top = 8;
+
+    panel.style.left   = left + 'px';
+    panel.style.top    = top  + 'px';
+    panel.style.bottom = 'auto';
+  }
+
+  /* ── ITEM ACTIONS ── */
+  itemEls.forEach(el => {
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = el.dataset.id;
+
+      if (id === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        closeArc();
+        return;
+      }
+
+      if (id === 'particles') {
+        const canvas = document.getElementById('particle-canvas');
+        if (canvas) {
+          const hidden = canvas.style.display === 'none';
+          canvas.style.display = hidden ? '' : 'none';
+          el.style.borderColor = hidden ? '' : 'var(--accent-purple)';
+        }
+        return;
+      }
+
+      if (id === 'a11y') {
+        const nowOpen = a11yPanel.classList.contains('open');
+        langPanel.classList.remove('open');
+        a11yPanel.classList.toggle('open', !nowOpen);
+        if (!nowOpen) positionPanel(a11yPanel);
+        return;
+      }
+
+      if (id === 'lang') {
+        const nowOpen = langPanel.classList.contains('open');
+        a11yPanel.classList.remove('open');
+        langPanel.classList.toggle('open', !nowOpen);
+        if (!nowOpen) positionPanel(langPanel);
+        return;
+      }
+    });
+  });
+
+  /* ── A11Y PANEL LOGIC ── */
+  function syncA11yUI() {
+    document.getElementById('at-toggle-motion').checked   = !!prefs.motion;
+    document.getElementById('at-toggle-contrast').checked = !!prefs.contrast;
+    document.getElementById('at-font-slider').value       = prefs.fontSize || 100;
+    document.getElementById('at-font-label').textContent  = (prefs.fontSize || 100) + '%';
+  }
+  syncA11yUI();
+
+  function savePrefs() { localStorage.setItem('a11y-prefs', JSON.stringify(prefs)); }
+
+  document.getElementById('at-toggle-motion').addEventListener('change', e => {
     prefs.motion = e.target.checked;
     document.body.classList.toggle('reduced-motion', prefs.motion);
-    // Bila reduced motion ON — matikan particles sekali
     const canvas = document.getElementById('particle-canvas');
-    if (canvas) canvas.style.display = prefs.motion ? 'none' : (prefs.particles ? 'none' : '');
-    save();
+    if (canvas) canvas.style.display = prefs.motion ? 'none' : '';
+    savePrefs();
   });
 
-  document.getElementById('toggle-contrast').addEventListener('change', e => {
+  document.getElementById('at-toggle-contrast').addEventListener('change', e => {
     prefs.contrast = e.target.checked;
     document.body.classList.toggle('high-contrast', prefs.contrast);
-    save();
+    savePrefs();
   });
 
-  document.getElementById('toggle-particles').addEventListener('change', e => {
-    prefs.particles = e.target.checked;
-    const canvas = document.getElementById('particle-canvas');
-    if (canvas) canvas.style.display = prefs.particles ? 'none' : '';
-    save();
-  });
-
-  document.getElementById('font-slider').addEventListener('input', e => {
+  document.getElementById('at-font-slider').addEventListener('input', e => {
     prefs.fontSize = parseInt(e.target.value);
     document.documentElement.style.fontSize = prefs.fontSize + '%';
-    document.getElementById('font-slider-label').textContent = prefs.fontSize + '%';
-    save();
+    document.getElementById('at-font-label').textContent = prefs.fontSize + '%';
+    savePrefs();
   });
 
-  // Auto-apply reduced motion if OS prefers it
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches && !prefs.hasOwnProperty('motion')) {
-    prefs.motion = true;
-    applyPrefs();
-    save();
+  /* ── DRAG LOGIC ── */
+  let isDragging = false;
+  let dragStartX, dragStartY, rootStartX, rootStartY, dragMoved;
+
+  function getPos() {
+    const s = root.style;
+    return {
+      x: parseInt(s.right  || '28', 10),
+      y: parseInt(s.bottom || '80', 10),
+    };
   }
+
+  function onDragStart(e) {
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    dragStartX  = clientX;
+    dragStartY  = clientY;
+    const pos   = getPos();
+    rootStartX  = pos.x;
+    rootStartY  = pos.y;
+    dragMoved   = false;
+    isDragging  = false;
+
+    document.addEventListener('mousemove', onDragMove, { passive: false });
+    document.addEventListener('mouseup',   onDragEnd);
+    document.addEventListener('touchmove', onDragMove, { passive: false });
+    document.addEventListener('touchend',  onDragEnd);
+  }
+
+  function onDragMove(e) {
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const dx = clientX - dragStartX;
+    const dy = clientY - dragStartY;
+
+    if (!isDragging && (Math.abs(dx) > 12 || Math.abs(dy) > 12)) {
+      isDragging = true;
+      dragMoved  = true;
+      root.classList.add('is-dragging');
+      closeArc();
+    }
+
+    if (!isDragging) return;
+    e.preventDefault();
+
+    // Compute new right/bottom (invert dx/dy since we use right/bottom)
+    let newRight  = rootStartX - dx;
+    let newBottom = rootStartY - dy;
+
+    // Clamp inside viewport
+    const maxRight  = window.innerWidth  - 54 - 8;
+    const maxBottom = window.innerHeight - 54 - 8;
+    newRight  = Math.max(8, Math.min(newRight,  maxRight));
+    newBottom = Math.max(8, Math.min(newBottom, maxBottom));
+
+    root.style.right  = newRight  + 'px';
+    root.style.bottom = newBottom + 'px';
+    root.style.left   = 'auto';
+    root.style.top    = 'auto';
+  }
+
+  function onDragEnd() {
+    document.removeEventListener('mousemove', onDragMove);
+    document.removeEventListener('mouseup',   onDragEnd);
+    document.removeEventListener('touchmove', onDragMove);
+    document.removeEventListener('touchend',  onDragEnd);
+
+    if (isDragging) {
+      // Snap to nearest edge
+      const rect   = root.getBoundingClientRect();
+      const cx     = rect.left + 27;
+      const cy     = rect.top  + 27;
+      const snapX  = cx < window.innerWidth  / 2 ? 8 : window.innerWidth  - 54 - 8;
+      const snapY  = cy < window.innerHeight / 2 ? 8 : window.innerHeight - 54 - 8;
+
+      root.classList.remove('is-dragging');
+      root.style.transition = 'right 0.3s cubic-bezier(0.34,1.56,0.64,1), bottom 0.3s cubic-bezier(0.34,1.56,0.64,1), left 0.3s, top 0.3s';
+
+      // Snap X — left atau right edge je
+      if (cx < window.innerWidth / 2) {
+        root.style.left  = '8px';
+        root.style.right = 'auto';
+      } else {
+        root.style.right = '8px';
+        root.style.left  = 'auto';
+      }
+
+      // Snap Y — bebas ikut posisi drag, clamp dalam viewport
+      const clampedBottom = Math.max(8, Math.min(
+        window.innerHeight - 54 - 8,
+        window.innerHeight - cy - 27
+      ));
+      root.style.bottom = clampedBottom + 'px';
+      root.style.top    = 'auto';
+
+      setTimeout(() => { root.style.transition = ''; }, 350);
+
+      // Save position
+      localStorage.setItem('at-pos', JSON.stringify({
+        right:  root.style.right,
+        bottom: root.style.bottom,
+        left:   root.style.left,
+        top:    root.style.top,
+      }));
+    }
+
+    setTimeout(() => { isDragging = false; }, 10);
+  }
+
+  btn.addEventListener('mousedown',  onDragStart);
+  btn.addEventListener('touchstart', onDragStart, { passive: true });
+
+  // Restore saved position
+  const savedPos = JSON.parse(localStorage.getItem('at-pos') || 'null');
+  if (savedPos) {
+    root.style.right  = savedPos.right  || '';
+    root.style.bottom = savedPos.bottom || '';
+    root.style.left   = savedPos.left   || '';
+    root.style.top    = savedPos.top    || '';
+  }
+
+  // Close arc on ESC
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeArc();
+  });
+
 })();
 
 /* ── SKILL DETAIL PANEL ────────────────────── */
