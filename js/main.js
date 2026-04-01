@@ -474,7 +474,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
   btn.addEventListener('click', e => {
     e.stopPropagation();
-    if (!isDragging) isOpen ? closeArc() : openArc();
+    isOpen ? closeArc() : openArc();
   });
 
   backdrop.addEventListener('click', closeArc);
@@ -577,127 +577,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     document.getElementById('at-font-label').textContent = prefs.fontSize + '%';
     savePrefs();
   });
-
-  /* ── DRAG LOGIC ── */
-  let isDragging = false;
-  let dragStartX, dragStartY, rootStartX, rootStartY, dragMoved;
-
-  function getPos() {
-    const s = root.style;
-    return {
-      x: parseInt(s.right  || '28', 10),
-      y: parseInt(s.bottom || '80', 10),
-    };
-  }
-
-  function onDragStart(e) {
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    dragStartX  = clientX;
-    dragStartY  = clientY;
-    const pos   = getPos();
-    rootStartX  = pos.x;
-    rootStartY  = pos.y;
-    dragMoved   = false;
-    isDragging  = false;
-
-    document.addEventListener('mousemove', onDragMove, { passive: false });
-    document.addEventListener('mouseup',   onDragEnd);
-    document.addEventListener('touchmove', onDragMove, { passive: false });
-    document.addEventListener('touchend',  onDragEnd);
-  }
-
-  function onDragMove(e) {
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    const dx = clientX - dragStartX;
-    const dy = clientY - dragStartY;
-
-    if (!isDragging && (Math.abs(dx) > 12 || Math.abs(dy) > 12)) {
-      isDragging = true;
-      dragMoved  = true;
-      root.classList.add('is-dragging');
-      closeArc();
-    }
-
-    if (!isDragging) return;
-    e.preventDefault();
-
-    // Compute new right/bottom (invert dx/dy since we use right/bottom)
-    let newRight  = rootStartX - dx;
-    let newBottom = rootStartY - dy;
-
-    // Clamp inside viewport
-    const maxRight  = window.innerWidth  - 54 - 8;
-    const maxBottom = window.innerHeight - 54 - 8;
-    newRight  = Math.max(8, Math.min(newRight,  maxRight));
-    newBottom = Math.max(8, Math.min(newBottom, maxBottom));
-
-    root.style.right  = newRight  + 'px';
-    root.style.bottom = newBottom + 'px';
-    root.style.left   = 'auto';
-    root.style.top    = 'auto';
-  }
-
-  function onDragEnd() {
-    document.removeEventListener('mousemove', onDragMove);
-    document.removeEventListener('mouseup',   onDragEnd);
-    document.removeEventListener('touchmove', onDragMove);
-    document.removeEventListener('touchend',  onDragEnd);
-
-    if (isDragging) {
-      // Snap to nearest edge
-      const rect   = root.getBoundingClientRect();
-      const cx     = rect.left + 27;
-      const cy     = rect.top  + 27;
-      const snapX  = cx < window.innerWidth  / 2 ? 8 : window.innerWidth  - 54 - 8;
-      const snapY  = cy < window.innerHeight / 2 ? 8 : window.innerHeight - 54 - 8;
-
-      root.classList.remove('is-dragging');
-      root.style.transition = 'right 0.3s cubic-bezier(0.34,1.56,0.64,1), bottom 0.3s cubic-bezier(0.34,1.56,0.64,1), left 0.3s, top 0.3s';
-
-      // Snap X — left atau right edge je
-      if (cx < window.innerWidth / 2) {
-        root.style.left  = '8px';
-        root.style.right = 'auto';
-      } else {
-        root.style.right = '8px';
-        root.style.left  = 'auto';
-      }
-
-      // Snap Y — bebas ikut posisi drag, clamp dalam viewport
-      const clampedBottom = Math.max(8, Math.min(
-        window.innerHeight - 54 - 8,
-        window.innerHeight - cy - 27
-      ));
-      root.style.bottom = clampedBottom + 'px';
-      root.style.top    = 'auto';
-
-      setTimeout(() => { root.style.transition = ''; }, 350);
-
-      // Save position
-      localStorage.setItem('at-pos', JSON.stringify({
-        right:  root.style.right,
-        bottom: root.style.bottom,
-        left:   root.style.left,
-        top:    root.style.top,
-      }));
-    }
-
-    setTimeout(() => { isDragging = false; }, 10);
-  }
-
-  btn.addEventListener('mousedown',  onDragStart);
-  btn.addEventListener('touchstart', onDragStart, { passive: true });
-
-  // Restore saved position
-  const savedPos = JSON.parse(localStorage.getItem('at-pos') || 'null');
-  if (savedPos) {
-    root.style.right  = savedPos.right  || '';
-    root.style.bottom = savedPos.bottom || '';
-    root.style.left   = savedPos.left   || '';
-    root.style.top    = savedPos.top    || '';
-  }
 
   // Close arc on ESC
   document.addEventListener('keydown', e => {
@@ -838,6 +717,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         'images/linux1.jpg',
         'images/linux2.jpg',
         'images/linux3.jpg',
+        'images/linux4.jpg',
+        'images/linux5.jpg',
+        'images/linux6.jpg',
       ],
       links: [
         /* projek akademik — takde live link, boleh letak PDF report kalau ada */
