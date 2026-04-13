@@ -386,113 +386,7 @@
 
   let currentLang = localStorage.getItem('portfolio-lang') || DEFAULT;
 
-  /* ── CSS ── */
-  const style = document.createElement('style');
-  style.textContent = `
-    #lang-switcher {
-      position: fixed;
-      bottom: 96px;
-      right: 28px;
-      z-index: 10000;
-      font-family: var(--font-mono, monospace);
-    }
-    #lang-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--bg-card, #1a1a2e);
-      border: 1px solid var(--border-active, rgba(124,58,237,0.5));
-      color: var(--text-secondary, #a0a0c0);
-      font-family: var(--font-mono, monospace);
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      padding: 9px 14px;
-      border-radius: var(--radius-md, 8px);
-      box-shadow: 0 4px 20px rgba(124,58,237,0.25);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
-    }
-    #lang-btn:hover {
-      background: rgba(124,58,237,0.2) !important;
-      color: var(--text-primary, #fff) !important;
-      transform: translateY(-2px);
-    }
-    #lang-chevron {
-      transition: transform 0.3s ease;
-      font-size: 0.9rem;
-      display: inline-block;
-    }
-    #lang-switcher.open #lang-chevron {
-      transform: rotate(180deg);
-    }
-    #lang-dropdown {
-      position: absolute;
-      bottom: calc(100% + 8px);
-      right: 0;
-      background: var(--bg-card, #1a1a2e);
-      border: 1px solid var(--border-active, rgba(124,58,237,0.5));
-      border-radius: var(--radius-md, 8px);
-      overflow: hidden;
-      display: none;
-      flex-direction: column;
-      min-width: 130px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    }
-    #lang-switcher.open #lang-dropdown {
-      display: flex;
-    }
-    .lang-option {
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.06));
-      color: var(--text-secondary, #a0a0c0);
-      font-family: var(--font-mono, monospace);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      padding: 11px 18px;
-      text-align: left;
-      cursor: pointer;
-      transition: background 0.15s ease, color 0.15s ease;
-      width: 100%;
-    }
-    .lang-option:last-child {
-      border-bottom: none;
-    }
-    .lang-option:hover {
-      background: rgba(124,58,237,0.18) !important;
-      color: var(--text-primary, #fff) !important;
-    }
-    .lang-option.active {
-      color: var(--accent-cyan, #22d3ee) !important;
-      background: rgba(34,211,238,0.08);
-    }
-    .lang-option.active:hover {
-      background: rgba(34,211,238,0.15) !important;
-    }
-  `;
-  document.head.appendChild(style);
-
-  /* ── Build switcher UI ── */
-  const wrapper = document.createElement('div');
-  wrapper.id = 'lang-switcher';
-  wrapper.innerHTML = `
-    <div id="lang-dropdown">
-      ${SUPPORTED.map(l => `<button class="lang-option" data-lang="${l}" type="button">${LABELS[l]}</button>`).join('')}
-    </div>
-    <button id="lang-btn" type="button" aria-label="Switch language" aria-haspopup="true">
-      <span id="lang-current">${LABELS[currentLang]}</span>
-      <span id="lang-chevron">▾</span>
-    </button>
-  `;
-  document.body.appendChild(wrapper);
-
-  /* ── Toggle dropdown ── */
-  document.getElementById('lang-btn').addEventListener('click', e => {
-    e.stopPropagation();
-    wrapper.classList.toggle('open');
-  });
-  document.addEventListener('click', () => wrapper.classList.remove('open'));
+  const wrapper = null; // lang switcher removed, using AssistiveTouch instead
 
   /* ── Apply translations ── */
   function applyLang(data) {
@@ -509,13 +403,6 @@
     applyLang(data);
     currentLang = lang;
     localStorage.setItem('portfolio-lang', lang);
-    document.getElementById('lang-current').textContent = LABELS[lang];
-    document.querySelectorAll('.lang-option').forEach(btn => {
-      const isActive = btn.dataset.lang === lang;
-      btn.classList.toggle('active', isActive);
-      btn.setAttribute('aria-selected', String(isActive));
-    });
-    wrapper.classList.remove('open');
   }
 
   /* ── AssistiveTouch lang panel integration ── */

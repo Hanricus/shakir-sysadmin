@@ -1845,7 +1845,7 @@ body.high-contrast {
 #at-root {
   position: fixed;
   z-index: 10000;
-  bottom: 80px;
+  bottom: 30px;
   right: 28px;
   width: 54px;
   height: 54px;
