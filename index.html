@@ -49,7 +49,7 @@
         <ul class="nav-links" role="list">
           <li><a href="#about" data-i18n="nav_about">About</a></li>
           <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
-          <li><a href="#server">Server</a></li>
+          <li><a href="#server" data-i18n="nav_server">Server</a></li>
           <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
           <li>
             <a href="https://github.com/Hanricus"
@@ -150,19 +150,19 @@
 
             <div class="avatar-badge badge-top-right">
               <span class="avatar-badge-icon"><i class="bx bxs-zap"></i></span>
-              Technician · LUNAS
+              <span data-i18n="badge_technician">Technician · LUNAS</span>
             </div>
             <div class="avatar-badge badge-bottom-left">
               <span class="avatar-badge-icon"><i class="bx bxs-graduation"></i></span>
-              IMS IT · UiTM
+              <span data-i18n="badge_education">IMS IT · UiTM</span>
             </div>
             <div class="avatar-badge badge-bottom-right">
               <span class="avatar-badge-icon"><i class="bx bx-laptop"></i></span>
-              Freelancer · Solo Projects
+              <span data-i18n="badge_freelancer">Freelancer · Solo Projects</span>
             </div>
             <div class="avatar-badge badge-top-left">
               <span class="avatar-badge-icon"><i class="bx bxs-flame"></i></span>
-              PHP System Dev
+              <span data-i18n="badge_dev">PHP System Dev</span>
             </div>
 
           </div>
@@ -464,8 +464,8 @@
 
     <section id="server" class="section" aria-labelledby="server-title">
       <div class="section-header reveal">
-        <div class="section-tag">04 — Live System</div>
-        <h2 class="section-title" id="server-title">Pocket <span>Server</span></h2>
+        <div class="section-tag" data-i18n="section_server_tag">04 — Live System</div>
+        <h2 class="section-title" id="server-title" data-i18n="section_server_title">Pocket <span>Server</span></h2>
       </div>
 
       <div class="pocketserver-wrapper reveal reveal-delay-1">
@@ -478,7 +478,7 @@
           </div>
 
           <h3 class="pocketserver-title">Abd Shakir — PocketServer</h3>
-          <p class="pocketserver-desc">
+          <p class="pocketserver-desc" data-i18n="ps_desc">
             Personal web server berjalan di atas <strong>Vivo Y91i</strong> menggunakan
             <span class="ps-tag">Termux</span> +
             <span class="ps-tag">nginx</span> +
@@ -491,29 +491,29 @@
             <div class="ps-spec-item">
               <div class="ps-spec-icon"><i class="bx bx-chip"></i></div>
               <div>
-                <div class="ps-spec-label">Hardware</div>
-                <div class="ps-spec-val">Vivo Y91i · 2GB RAM</div>
+                <div class="ps-spec-label" data-i18n="ps_spec_hardware_label">Hardware</div>
+                <div class="ps-spec-val" data-i18n="ps_spec_hardware_val">Vivo Y91i · 2GB RAM</div>
               </div>
             </div>
             <div class="ps-spec-item">
               <div class="ps-spec-icon"><i class="bx bx-server"></i></div>
               <div>
-                <div class="ps-spec-label">Stack</div>
-                <div class="ps-spec-val">nginx · PHP 8.5 · MariaDB 12</div>
+                <div class="ps-spec-label" data-i18n="ps_spec_stack_label">Stack</div>
+                <div class="ps-spec-val" data-i18n="ps_spec_stack_val">nginx · PHP 8.5 · MariaDB 12</div>
               </div>
             </div>
             <div class="ps-spec-item">
               <div class="ps-spec-icon"><i class="bx bx-globe"></i></div>
               <div>
-                <div class="ps-spec-label">Tunnel</div>
-                <div class="ps-spec-val">ngrok → Cloudflare Workers</div>
+                <div class="ps-spec-label" data-i18n="ps_spec_tunnel_label">Tunnel</div>
+                <div class="ps-spec-val" data-i18n="ps_spec_tunnel_val">ngrok → Cloudflare Workers</div>
               </div>
             </div>
             <div class="ps-spec-item">
               <div class="ps-spec-icon"><i class="bx bx-time"></i></div>
               <div>
-                <div class="ps-spec-label">Uptime Note</div>
-                <div class="ps-spec-val">Depends on phone battery 😅</div>
+                <div class="ps-spec-label" data-i18n="ps_spec_uptime_label">Uptime Note</div>
+                <div class="ps-spec-val" data-i18n="ps_spec_uptime_val">Depends on phone battery 😅</div>
               </div>
             </div>
           </div>
@@ -524,7 +524,7 @@
              class="ps-launch-btn"
              id="ps-launch-btn">
             <span class="ps-launch-icon"><i class="bx bx-link-external"></i></span>
-            <span>Launch PocketServer</span>
+            <span data-i18n="ps_launch_btn">Launch PocketServer</span>
             <span class="ps-launch-arrow">→</span>
           </a>
         </div>
@@ -537,18 +537,21 @@
               <span class="ps-tdot yellow"></span>
               <span class="ps-tdot green"></span>
             </div>
-            <div class="ps-terminal-title">server — status@vivo-y91i</div>
+            <div class="ps-terminal-title" data-i18n="ps_terminal_title">server — status@vivo-y91i</div>
           </div>
           <div class="ps-terminal-body" id="ps-terminal-body">
-            <div class="ps-line"><span class="ps-prompt">$</span> <span class="ps-cmd">ping pocketserver --check</span></div>
+            <div class="ps-line">
+              <span class="ps-prompt">$</span>
+              <span class="ps-cmd" data-i18n="ps_terminal_cmd">ping pocketserver --check</span>
+            </div>
             <div class="ps-line ps-line-wait" id="ps-line-checking">
-              <span class="ps-comment"># checking connection...</span>
+              <span class="ps-comment" data-i18n="ps_terminal_checking"># checking connection...</span>
               <span class="ps-blink">▋</span>
             </div>
             <div class="ps-line ps-result hidden" id="ps-line-result"></div>
             <div class="ps-line ps-meta hidden" id="ps-line-meta"></div>
             <div class="ps-line ps-hint hidden" id="ps-line-hint">
-              <span class="ps-comment"># press enter to visit →</span>
+              <span class="ps-comment" data-i18n="ps_visit_hint"># press enter to visit →</span>
             </div>
           </div>
           <div class="ps-terminal-footer">
@@ -796,6 +799,13 @@
       const tfUptime   = document.getElementById('ps-tf-uptime');
       const tfPing     = document.getElementById('ps-tf-ping');
 
+      // Get translated string from current lang data (fallback to EN)
+      function t(key) {
+        const lang = localStorage.getItem('portfolio-lang') || 'ms';
+        const data = window.__LANG_DATA__ && window.__LANG_DATA__[lang];
+        return (data && data[key]) || key;
+      }
+
       async function checkStatus() {
         const t0 = Date.now();
         try {
@@ -817,11 +827,11 @@
         tfUptime.textContent = 'status: HTTP ' + status;
         lineCheck.classList.add('hidden');
         lineResult.classList.remove('hidden', 'offline'); lineResult.classList.add('online');
-        lineResult.innerHTML = '<span class="ps-comment">> connection established ✓</span>';
+        lineResult.innerHTML = '<span class="ps-comment">' + t('ps_connected') + '</span>';
         lineMeta.classList.remove('hidden');
         lineMeta.innerHTML = '<span class="ps-comment">> response: ' + ping + 'ms · HTTP ' + status + '</span>';
         lineHint.classList.remove('hidden');
-        lineHint.innerHTML = '<span class="ps-comment"># click Launch PocketServer to visit →</span>';
+        lineHint.querySelector('[data-i18n="ps_visit_hint"]') && (lineHint.querySelector('[data-i18n="ps_visit_hint"]').textContent = t('ps_visit_hint'));
       }
 
       function setOffline(reason) {
@@ -831,11 +841,11 @@
         tfUptime.textContent = 'status: unreachable';
         lineCheck.classList.add('hidden');
         lineResult.classList.remove('hidden', 'online'); lineResult.classList.add('offline');
-        lineResult.innerHTML = '<span class="ps-comment">> connection failed ✗</span>';
+        lineResult.innerHTML = '<span class="ps-comment">' + t('ps_failed') + '</span>';
         lineMeta.classList.remove('hidden');
         lineMeta.innerHTML = '<span class="ps-comment">> ' + reason + '</span>';
         lineHint.classList.remove('hidden');
-        lineHint.innerHTML = '<span class="ps-comment"># server mungkin tengah cas phone 😅</span>';
+        lineHint.querySelector('[data-i18n="ps_visit_hint"]') && (lineHint.querySelector('[data-i18n="ps_visit_hint"]').textContent = t('ps_offline_hint'));
       }
 
       setTimeout(checkStatus, 1200);
