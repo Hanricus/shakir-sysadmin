@@ -363,7 +363,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   backdrop.id = 'at-backdrop';
   document.body.appendChild(backdrop);
 
-  // Root draggable container
+  // Root container
   const root = document.createElement('div');
   root.id = 'at-root';
   document.body.appendChild(root);
@@ -436,9 +436,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   let isOpen = false;
 
   // Arc angles — spread upward-left from bottom-right button
-  // Angles in degrees: 0 = right, 90 = up, 180 = left
- const arcAngles = [65, 30, -5, -40]; // semua ke kiri-atas
-  const arcRadius = 100; // lebih jauh supaya tak rapat
+ // Sudut dalam darjah (0 = Kanan, 90 = Atas, 180 = Kiri)
+const arcAngles = [100, 130, 160, 190]; 
+const arcRadius = 110; // Jarak dijauhkan sikit supaya nampak lebih luas
 
   function openArc() {
     isOpen = true;
