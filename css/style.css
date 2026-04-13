@@ -1845,15 +1845,13 @@ body.high-contrast {
 #at-root {
   position: fixed;
   z-index: 10000;
-  bottom: 10px;
+  bottom: 80px;
   right: 28px;
   width: 54px;
   height: 54px;
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
-  isolation: isolate; /* ← TAMBAH NI */
-  overflow: visible;
 }
 
 #at-root.is-dragging {
@@ -1934,7 +1932,7 @@ body.high-contrast {
 
 /* Arc menu items */
 .at-item {
-  position: fixed;
+  position: absolute;
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -1947,19 +1945,24 @@ body.high-contrast {
   align-items: center;
   justify-content: center;
   gap: 2px;
+  cursor: none;
   color: var(--text-secondary);
   font-family: var(--font-mono);
   font-size: 0.5rem;
   letter-spacing: 0.06em;
+  /* Start from center of #at-root */
+  top: 4px;
+  left: 4px;
   opacity: 0;
-  pointer-events: none;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  -webkit-tap-highlight-color: transparent;
+  transform: scale(0.3);
   transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
     opacity 0.25s ease,
     background 0.2s ease,
     border-color 0.2s ease;
-  /* BUANG semua top/left/margin/transform dari sini */
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .at-item i {
@@ -2007,8 +2010,8 @@ body.high-contrast {
   transition: opacity 0.15s ease;
   top: 50%;
   transform: translateY(-50%);
-  left: calc(100% + 8px);
-  right: auto;
+  right: calc(100% + 8px);
+  left: auto;
 }
 
 .at-item:hover .at-tooltip {

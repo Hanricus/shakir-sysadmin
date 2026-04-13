@@ -102,10 +102,8 @@ const isLowEnd = (() => {
   btn.setAttribute('aria-expanded', 'true');
   document.body.style.overflow = 'hidden';
   btn.style.zIndex = '100000'; // tambah ni — burger button nampak atas overlay
-  document.body.dataset.scrollY = window.scrollY;
-  document.body.style.top = `-${window.scrollY}px`;
-  document.body.style.position = 'fixed';
-  document.body.style.width = '100%';
+  document.body.style.position = 'fixed'; // tambah ni — prevent background scroll iOS
+  document.body.style.width = '100%';     // tambah ni — prevent layout shift
 }
 
   function closeMenu() {
@@ -114,11 +112,8 @@ const isLowEnd = (() => {
   btn.setAttribute('aria-expanded', 'false');
   document.body.style.overflow = '';
   btn.style.zIndex = ''; // tambah ni — reset balik
-  const scrollY = parseInt(document.body.dataset.scrollY || '0');
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  window.scrollTo(0, scrollY);
+  document.body.style.position = ''; // tambah ni
+  document.body.style.width = '';    // tambah ni
 }
 
   btn.addEventListener('click', () => {
@@ -346,6 +341,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 ══════════════════════════════════════════════ */
 (function initAssistiveTouch() {
 
+  /* ── A11Y PREFS ── */
   const prefs = JSON.parse(localStorage.getItem('a11y-prefs') || '{}');
 
   function applyPrefs() {
@@ -367,24 +363,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   backdrop.id = 'at-backdrop';
   document.body.appendChild(backdrop);
 
+  // Root draggable container
   const root = document.createElement('div');
   root.id = 'at-root';
   document.body.appendChild(root);
 
+  // Main button
   const btn = document.createElement('button');
   btn.id = 'at-btn';
   btn.setAttribute('aria-label', 'Quick Settings');
   btn.innerHTML = `
-    <div class="at-grid">${Array(9).fill('<span></span>').join('')}</div>
+    <div class="at-grid">
+      ${Array(9).fill('<span></span>').join('')}
+    </div>
     <div class="at-close-icon"><i class='bx bx-x'></i></div>
   `;
   root.appendChild(btn);
 
+  /* ── ARC ITEMS DATA ── */
   const items = [
-    { id: 'lang',      icon: 'bx bx-globe',       label: 'Lang',  tooltip: 'Language' },
-    { id: 'a11y',      icon: 'bx bx-slider-alt',  label: 'Optim', tooltip: 'Accessibility' },
-    { id: 'particles', icon: 'bx bx-stars',        label: 'FX',    tooltip: 'Toggle Particles' },
-    { id: 'top',       icon: 'bx bx-up-arrow-alt', label: 'Top',   tooltip: 'Back to Top' },
+    { id: 'lang',     icon: 'bx bx-globe',        label: 'Lang',   tooltip: 'Language' },
+    { id: 'a11y',     icon: 'bx bx-slider-alt',   label: 'Optim',  tooltip: 'Accessibility' },
+    { id: 'particles',icon: 'bx bx-stars',         label: 'FX',     tooltip: 'Toggle Particles' },
+    { id: 'top',      icon: 'bx bx-up-arrow-alt',  label: 'Top',    tooltip: 'Back to Top' },
   ];
 
   const itemEls = [];
@@ -399,12 +400,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       <span class="at-item-label">${data.label}</span>
       <span class="at-tooltip">${data.tooltip}</span>
     `;
-    // Letak terus dalam body — position fixed, bukan dalam root
-    document.body.appendChild(el);
+    root.appendChild(el);
     itemEls.push(el);
   });
 
   /* ── SUB PANELS ── */
+  // A11y panel
   const a11yPanel = document.createElement('div');
   a11yPanel.id = 'at-a11y-panel';
   a11yPanel.innerHTML = `
@@ -425,70 +426,34 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   `;
   document.body.appendChild(a11yPanel);
 
+  // Lang panel
   const langPanel = document.createElement('div');
   langPanel.id = 'at-lang-panel';
   langPanel.innerHTML = `<div class="at-panel-title"><i class='bx bx-globe'></i> Language</div>`;
   document.body.appendChild(langPanel);
 
-  /* ── COMPUTE POSITIONS ── */
-  // Setiap item dapat fixed top/left berdasarkan button position
-  // Semua dikira fresh setiap kali open — handle resize/drag
-  function computePositions() {
-    const rootRect = root.getBoundingClientRect();
-    const btnCX = rootRect.left + rootRect.width  / 2;  // center X button
-    const btnCY = rootRect.top  + rootRect.height / 2;  // center Y button
-    const itemR = 26;   // half of 52px
-    const gap   = 14;   // jarak dari tepi screen
-    const vw    = window.innerWidth;
-    const vh    = window.innerHeight;
-    const dist  = 90;   // jarak dari button center ke item center
-
-    // 4 arah dalam arc (kiri → kiri-atas → atas-kiri → atas)
-    // Angle dalam degrees, 180=kiri, 90=atas
-    const angles = [180, 135, 100, 70];   // Lang, Optim, FX, Top
-
-    return angles.map(deg => {
-      const rad = deg * Math.PI / 180;
-      let cx = btnCX + Math.cos(rad) * dist;
-      let cy = btnCY - Math.sin(rad) * dist;   // minus sbb Y axis terbalik
-
-      // Clamp dalam viewport
-      cx = Math.max(itemR + gap, Math.min(vw - itemR - gap, cx));
-      cy = Math.max(itemR + gap, Math.min(vh - itemR - gap, cy));
-
-      return {
-        left: Math.round(cx - itemR) + 'px',
-        top:  Math.round(cy - itemR) + 'px',
-      };
-    });
-  }
-
-  /* ── OPEN / CLOSE ── */
+  /* ── OPEN / CLOSE ARC ── */
   let isOpen = false;
+
+  // Arc angles — spread upward-left from bottom-right button
+  // Angles in degrees: 0 = right, 90 = up, 180 = left
+ const arcAngles = [65, 30, -5, -40]; // semua ke kiri-atas
+  const arcRadius = 100; // lebih jauh supaya tak rapat
 
   function openArc() {
     isOpen = true;
     btn.classList.add('open');
     backdrop.classList.add('open');
 
-    const positions = computePositions();
-
     itemEls.forEach((el, i) => {
-      const pos = positions[i];
-      el.style.left = pos.left;
-      el.style.top  = pos.top;
-      el.style.transform = 'scale(0.3)';
-      el.style.opacity = '0';
-
-      // Force reflow sebelum animate
-      void el.offsetWidth;
-
+      const angle = arcAngles[i] * (Math.PI / 180);
+      const tx = -Math.cos(angle) * arcRadius - 23;
+      const ty = -Math.sin(angle) * arcRadius - 23;
+      // Small delay per item for stagger effect
       setTimeout(() => {
-        el.style.transition = 'opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, border-color 0.2s ease';
-        el.style.transform = 'scale(1)';
-        el.style.opacity = '1';
-        el.style.pointerEvents = 'all';
-      }, i * 50);
+        el.style.transform = `translate(${tx}px, ${ty}px) scale(1)`;
+        el.classList.add('visible');
+      }, i * 40);
     });
   }
 
@@ -498,12 +463,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     backdrop.classList.remove('open');
 
     itemEls.forEach(el => {
-      el.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-      el.style.transform = 'scale(0.3)';
-      el.style.opacity = '0';
-      el.style.pointerEvents = 'none';
+      el.style.transform = '';
+      el.classList.remove('visible');
     });
 
+    // Close sub panels too
     a11yPanel.classList.remove('open');
     langPanel.classList.remove('open');
   }
@@ -516,17 +480,26 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   backdrop.addEventListener('click', closeArc);
 
   /* ── POSITION SUB PANELS ── */
+  // LABEL: positionPanel — letak sub-panel elak bertindih
   function positionPanel(panel) {
     const rootRect = root.getBoundingClientRect();
     const pw = 240;
     const ph = panel.scrollHeight || 220;
 
+    // Letak panel kat kiri button, align atas
     let left = rootRect.left - pw - 16;
-    let top  = rootRect.top - ph;
+    let top  = rootRect.top;
 
+    // Kalau terlalu ke kiri (luar viewport), flip ke kanan
     if (left < 8) left = rootRect.right + 16;
-    if (top < 8)  top  = 8;
-    if (top + ph > window.innerHeight - 8) top = window.innerHeight - ph - 8;
+
+    // Kalau panel terkeluar bawah viewport, angkat ke atas
+    if (top + ph > window.innerHeight - 8) {
+      top = window.innerHeight - ph - 8;
+    }
+
+    // Jangan terkeluar atas viewport
+    if (top < 8) top = 8;
 
     panel.style.left   = left + 'px';
     panel.style.top    = top  + 'px';
@@ -605,6 +578,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     savePrefs();
   });
 
+  // Close arc on ESC
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeArc();
   });
