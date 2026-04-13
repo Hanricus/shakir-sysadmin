@@ -1852,6 +1852,7 @@ body.high-contrast {
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
+  isolation: isolate; /* ← TAMBAH NI */
 }
 
 #at-root.is-dragging {
@@ -1950,11 +1951,15 @@ body.high-contrast {
   font-family: var(--font-mono);
   font-size: 0.5rem;
   letter-spacing: 0.06em;
-  /* Start from center of #at-root */
-  top: 4px;
-  left: 4px;
+  
+  /* PENTING: Start from exact center of #at-root */
+  top: 50%;
+  left: 50%;
+  margin-top: -26px; /* Separuh daripada height */
+  margin-left: -26px; /* Separuh daripada width */
+  
   opacity: 0;
-  transform: scale(0.3);
+  transform: translate(0, 0) scale(0.3);
   transition:
     transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
     opacity 0.25s ease,
@@ -2010,8 +2015,8 @@ body.high-contrast {
   transition: opacity 0.15s ease;
   top: 50%;
   transform: translateY(-50%);
-  right: calc(100% + 8px);
-  left: auto;
+  left: calc(100% + 8px);
+  right: auto;
 }
 
 .at-item:hover .at-tooltip {

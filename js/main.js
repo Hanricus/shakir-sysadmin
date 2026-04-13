@@ -102,8 +102,10 @@ const isLowEnd = (() => {
   btn.setAttribute('aria-expanded', 'true');
   document.body.style.overflow = 'hidden';
   btn.style.zIndex = '100000'; // tambah ni — burger button nampak atas overlay
-  document.body.style.position = 'fixed'; // tambah ni — prevent background scroll iOS
-  document.body.style.width = '100%';     // tambah ni — prevent layout shift
+  document.body.dataset.scrollY = window.scrollY;
+  document.body.style.top = `-${window.scrollY}px`;
+  document.body.style.position = 'fixed';
+  document.body.style.width = '100%';
 }
 
   function closeMenu() {
@@ -112,8 +114,11 @@ const isLowEnd = (() => {
   btn.setAttribute('aria-expanded', 'false');
   document.body.style.overflow = '';
   btn.style.zIndex = ''; // tambah ni — reset balik
-  document.body.style.position = ''; // tambah ni
-  document.body.style.width = '';    // tambah ni
+  const scrollY = parseInt(document.body.dataset.scrollY || '0');
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollY);
 }
 
   btn.addEventListener('click', () => {
@@ -435,21 +440,22 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   /* ── OPEN / CLOSE ARC ── */
   let isOpen = false;
 
-  // Arc angles — spread upward-left from bottom-right button
- // Sudut dalam darjah (0 = Kanan, 90 = Atas, 180 = Kiri)
-const arcAngles = [100, 130, 160, 190]; 
-const arcRadius = 110; // Jarak dijauhkan sikit supaya nampak lebih luas
-
   function openArc() {
     isOpen = true;
     btn.classList.add('open');
     backdrop.classList.add('open');
 
+    // Sudut: 110 (atas sikit), 140, 170, 200 (kiri)
+    // Supaya butang tu elak daripada berlanggar dengan penjuru skrin
+    const arcAngles = [290, 205, 180, 155];
+    const arcRadius = 85;
+
     itemEls.forEach((el, i) => {
       const angle = arcAngles[i] * (Math.PI / 180);
-      const tx = -Math.cos(angle) * arcRadius - 23;
-      const ty = -Math.sin(angle) * arcRadius - 23;
-      // Small delay per item for stagger effect
+      
+      const tx = Math.cos(angle) * arcRadius;
+      const ty = -Math.sin(angle) * arcRadius; // Negatif supaya naik atas skrin
+      
       setTimeout(() => {
         el.style.transform = `translate(${tx}px, ${ty}px) scale(1)`;
         el.classList.add('visible');
