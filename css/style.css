@@ -2288,3 +2288,133 @@ body.high-contrast {
   .orbit-link { width: 34px; height: 34px; font-size: 0.85rem; }
   .orbit-link::after { display: none; }
 }
+
+/* ══ ORBIT SOCIAL BUTTONS ══ */
+.orbit-social {
+  position: absolute;
+  /* Letak kat luar ring paling luar — inset negatif */
+  inset: -58px;
+  border-radius: 50%;
+  animation: orbit-spin-social 18s linear infinite;
+  pointer-events: none;
+  z-index: 20;
+}
+
+@keyframes orbit-spin-social {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.orbit-social-link {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1.05rem;
+  pointer-events: all;
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+  /* counter-rotate supaya icon kekal upright */
+  animation: orbit-counter-social 18s linear infinite;
+  /* Letak kat tepi bulatan — translate ke atas dari center */
+  top: 50%;
+  left: 50%;
+}
+
+@keyframes orbit-counter-social {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+/* 4 posisi — rotate wrapper 90deg each */
+.orbit-social-link:nth-child(1) {
+  /* Top */
+  margin-top: -240px;
+  margin-left: -20px;
+}
+.orbit-social-link:nth-child(2) {
+  /* Right */
+  margin-top: -20px;
+  margin-left: 200px;
+}
+.orbit-social-link:nth-child(3) {
+  /* Bottom */
+  margin-top: 200px;
+  margin-left: -20px;
+}
+.orbit-social-link:nth-child(4) {
+  /* Left */
+  margin-top: -20px;
+  margin-left: -240px;
+}
+
+/* Default — violet */
+.orbit-social-link {
+  background: rgba(10, 8, 30, 0.85);
+  border: 1.5px solid rgba(168, 85, 247, 0.5);
+  color: var(--accent-purple);
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.25);
+}
+
+.orbit-social-link:hover {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+}
+
+/* Server link — cyan */
+.orbit-social-link.server {
+  border-color: rgba(34, 211, 238, 0.5);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
+}
+
+.orbit-social-link.server:hover {
+  background: rgba(34, 211, 238, 0.12);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.45);
+}
+
+/* Tooltip */
+.orbit-social-link::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.42rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  color: var(--accent-purple);
+}
+
+.orbit-social-link.server::after { color: var(--accent-cyan); }
+.orbit-social-link:hover::after  { opacity: 1; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .orbit-social { inset: -46px; }
+  .orbit-social-link { width: 34px; height: 34px; font-size: 0.9rem; }
+  .orbit-social-link:nth-child(1) { margin-top: -190px; margin-left: -17px; }
+  .orbit-social-link:nth-child(2) { margin-top: -17px;  margin-left: 156px; }
+  .orbit-social-link:nth-child(3) { margin-top: 156px;  margin-left: -17px; }
+  .orbit-social-link:nth-child(4) { margin-top: -17px;  margin-left: -190px; }
+}
+
+@media (max-width: 600px) {
+  .orbit-social { inset: -40px; }
+  .orbit-social-link { width: 30px; height: 30px; font-size: 0.8rem; }
+  .orbit-social-link:nth-child(1) { margin-top: -160px; margin-left: -15px; }
+  .orbit-social-link:nth-child(2) { margin-top: -15px;  margin-left: 130px; }
+  .orbit-social-link:nth-child(3) { margin-top: 130px;  margin-left: -15px; }
+  .orbit-social-link:nth-child(4) { margin-top: -15px;  margin-left: -160px; }
+  .orbit-social-link::after { display: none; }
+}
