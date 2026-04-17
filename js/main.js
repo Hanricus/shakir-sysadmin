@@ -870,3 +870,37 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 
 })();
+
+/* ── ORBIT SOCIAL PAUSE ON HOVER ── */
+(function initOrbitPause() {
+  const orbit = document.querySelector('.orbit-social');
+  if (!orbit) return;
+
+  // Mouse hover — desktop
+  orbit.addEventListener('mouseenter', () => {
+    orbit.style.animationPlayState = 'paused';
+    orbit.querySelectorAll('.orbit-social-link').forEach(el => {
+      el.style.animationPlayState = 'paused';
+    });
+  });
+
+  orbit.addEventListener('mouseleave', () => {
+    orbit.style.animationPlayState = 'running';
+    orbit.querySelectorAll('.orbit-social-link').forEach(el => {
+      el.style.animationPlayState = 'running';
+    });
+  });
+
+  // Touch — tap pause, tap again resume
+  let paused = false;
+  orbit.addEventListener('touchstart', e => {
+    // Kalau target adalah link (button), biar dia navigate
+    if (e.target.closest('.orbit-social-link')) return;
+    paused = !paused;
+    const state = paused ? 'paused' : 'running';
+    orbit.style.animationPlayState = state;
+    orbit.querySelectorAll('.orbit-social-link').forEach(el => {
+      el.style.animationPlayState = state;
+    });
+  }, { passive: true });
+})();
