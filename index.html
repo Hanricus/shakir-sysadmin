@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Abd Shakir — MSc IT Graduate, Information Systems Management." />
+  <meta name="theme-color" content="#0b0b0c" />
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <title>Abd Shakir | Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-follower" aria-hidden="true"></div>
+
+  <!-- Ambient Background -->
+  <div class="bg-ambient" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="grid-lines" aria-hidden="true"></div>
+
+  <!-- Particle Canvas -->
+  <canvas id="particle-canvas"
+          style="position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.6;"
+          aria-hidden="true"></canvas>
+
+  <div class="page-wrapper">
+
+    <!-- ══ NAVIGATION ══ -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+      <div class="nav-inner">
+
+        <a href="#hero" class="nav-logo" aria-label="Abd Shakir — Home">
+          <span class="nav-logo-dot" aria-hidden="true"></span>
+          ABD SHAKIR
+        </a>
+
+        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+
+        <ul class="nav-links" role="list">
+          <li><a href="#about" data-i18n="nav_about">About</a></li>
+          <li>
+            <a href="https://github.com/Hanricus"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="nav-cta">
+              GitHub ↗
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+
+
+    <!-- ══ HERO ══ -->
+    <section id="hero" class="hero" aria-labelledby="hero-name">
+      <div class="hero-content">
+
+        <!-- Left -->
+        <div class="hero-left">
+          <div class="hero-tag">
+            <span class="hero-tag-dot" aria-hidden="true"></span>
+            <span data-i18n="hero_tag">Available for opportunities</span>
+          </div>
+
+          <h1 class="hero-name" id="hero-name">
+            <span class="hero-name-first">Abdul</span>
+            <span class="hero-name-last">Shakir</span>
+          </h1>
+
+          <p class="hero-title" data-i18n="hero_title">
+            IMS IT · <span>Information Systems</span> · Technician &amp; System Developer
+          </p>
+
+          <p class="hero-desc" data-i18n="hero_desc">
+            Dedicated <strong>System Developer</strong> specializing in
+            <span class="hero-tech-tag">PHP</span>,
+            <span class="hero-tech-tag">Laravel</span>,
+            <span class="hero-tech-tag">JavaScript</span>.
+            Focused on building robust digital solutions and scalable enterprise or any other applications.<br><br>
+            Currently pursuing <strong>Postgraduate</strong> studies at <strong>UiTM Shah Alam</strong> in <strong>Information Technology</strong>
+            to further expertise in strategic information architecture.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#about" class="btn-primary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+              </svg>
+              <span data-i18n="hero_btn_projects">View Projects</span>
+            </a>
+            <a href="mailto:shakim731@gmail.com" class="btn-outline">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <span data-i18n="hero_btn_contact">Let's Talk</span>
+            </a>
+          </div>
+
+          <!-- Stats -->
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-value" data-count="10" data-suffix="+">0</div>
+              <div class="stat-label" data-i18n="stat_projects">Projects Built</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" data-count="6" data-suffix=" Months">0</div>
+              <div class="stat-label" data-i18n="stat_exp">Industry Exp.</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" data-count="7" data-suffix="+">0</div>
+              <div class="stat-label" data-i18n="stat_stacks">Tech Stacks</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right — Avatar -->
+        <div class="hero-right" aria-hidden="true">
+          <div class="avatar-wrapper">
+
+            <div class="avatar-glow"></div>
+            <div class="avatar-rings">
+              <div class="avatar-ring avatar-ring-1"></div>
+              <div class="avatar-ring avatar-ring-2"></div>
+              <div class="avatar-ring avatar-ring-3"></div>
+            </div>
+
+            <!-- Orbit Social Buttons -->
+            <div class="orbit-social" aria-hidden="true">
+              <a href="https://github.com/Hanricus"
+                 target="_blank" rel="noopener noreferrer"
+                 class="orbit-social-link"
+                 data-tip="GitHub">
+                <i class="bx bxl-github"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/abdulshakirhakim"
+                 target="_blank" rel="noopener noreferrer"
+                 class="orbit-social-link"
+                 data-tip="LinkedIn">
+                <i class="bx bxl-linkedin"></i>
+              </a>
+              <a href="mailto:shakim731@gmail.com"
+                 class="orbit-social-link"
+                 data-tip="Email">
+                <i class="bx bx-envelope"></i>
+              </a>
+              <a href="https://steep-bread-aef1.shakim731.workers.dev"
+                 target="_blank" rel="noopener noreferrer"
+                 class="orbit-social-link server"
+                 data-tip="Server">
+                <i class="bx bx-server"></i>
+              </a>
+            </div>
+            
+            <div class="avatar-frame">
+              <img src="images/Shakir.jpg" alt="Abd Shakir" class="avatar-img" />
+            </div>
+
+            <div class="avatar-badge badge-top-right">
+              <span class="avatar-badge-icon"><i class="bx bxs-zap"></i></span>
+              <span data-i18n="badge_technician">Technician · LUNAS</span>
+            </div>
+            <div class="avatar-badge badge-bottom-left">
+              <span class="avatar-badge-icon"><i class="bx bxs-graduation"></i></span>
+              <span data-i18n="badge_education">IMS IT · UiTM</span>
+            </div>
+            <div class="avatar-badge badge-bottom-right">
+              <span class="avatar-badge-icon"><i class="bx bx-laptop"></i></span>
+              <span data-i18n="badge_freelancer">Freelancer · Solo Projects</span>
+            </div>
+            <div class="avatar-badge badge-top-left">
+              <span class="avatar-badge-icon"><i class="bx bxs-flame"></i></span>
+              <span data-i18n="badge_dev">PHP System Dev</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Scroll cue -->
+      <div class="scroll-indicator" aria-hidden="true">
+        <div class="scroll-line"></div>
+        <span class="scroll-text">Scroll</span>
+      </div>
+    </section>
+
+
+    <!-- ══ ABOUT ══ -->
+    <div class="divider" aria-hidden="true"></div>
+
+    <section id="about" class="section" aria-labelledby="about-title">
+      <div class="section-header reveal">
+        <div class="section-tag" data-i18n="section_about_tag">01 — About Me</div>
+        <h2 class="section-title" id="about-title" data-i18n="section_about_heading">
+          Who is <span>Abdul Shakir</span>?
+        </h2>
+      </div>
+
+      <div class="about-grid">
+
+        <!-- Identity & Education -->
+        <div class="about-identity reveal reveal-delay-1">
+
+          <div class="identity-card">
+            <div class="identity-label" data-i18n="about_status_label">Current Status</div>
+            <div class="identity-value" data-i18n="about_status_value">Postgraduate Student</div>
+            <div class="identity-sub" data-i18n="about_status_sub">Master of Science in Information Technology</div>
+          </div>
+
+          <div class="identity-card">
+            <div class="identity-label" data-i18n="about_edu_label">Education</div>
+            <ul class="edu-list">
+              <li class="edu-item">
+                <div class="edu-dot"></div>
+                <div>
+                  <div class="edu-degree" data-i18n="edu1_degree">MSc Information Technology</div>
+                  <div class="edu-school" data-i18n="edu1_school">UiTM Shah Alam · 2026 – Present</div>
+                </div>
+              </li>
+              <li class="edu-item">
+                <div class="edu-dot"></div>
+                <div>
+                  <div class="edu-degree" data-i18n="edu2_degree">BIS (Hons) Information Systems Management</div>
+                  <div class="edu-school" data-i18n="edu2_school">UiTM Machang · Completed</div>
+                </div>
+              </li>
+              <li class="edu-item">
+                <div class="edu-dot"></div>
+                <div>
+                  <div class="edu-degree" data-i18n="edu3_degree">Diploma in Information Management</div>
+                  <div class="edu-school" data-i18n="edu3_school">UiTM Sungai Petani · Completed</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Experience -->
+          <div class="identity-card">
+            <div class="identity-label" data-i18n="about_exp_label">Experience</div>
+
+            <div class="exp-item">
+              <div class="exp-icon-wrap"><i class="bx bx-anchor"></i></div>
+              <div class="exp-content">
+                <div class="exp-role" data-i18n="exp1_role">IT Intern — Information Systems Dept.</div>
+                <div class="exp-company">Lumut Naval Shipyard (LUNAS)</div>
+                <div class="exp-duration" data-i18n="exp1_duration">Industrial Training</div>
+                <div class="exp-desc" data-i18n="exp1_desc">
+                  Hands-on experience in naval IS operations, system maintenance, and internal IT infrastructure support.
+                </div>
+              </div>
+            </div>
+
+            <div class="exp-item">
+              <div class="exp-icon-wrap"><i class="bx bxl-wordpress"></i></div>
+              <div class="exp-content">
+                <div class="exp-role" data-i18n="exp2_role">Freelance Web Developer</div>
+                <div class="exp-company" data-i18n="exp2_company">Independent Project</div>
+                <div class="exp-duration" data-i18n="exp2_duration">Project-Based</div>
+                <div class="exp-desc" data-i18n="exp2_desc">
+                  Developed and deployed a Content Management System (WordPress) for a local Madrasah. Managed domain setup, theme customization, and structured the digital content architecture.
+                </div>
+              </div>
+            </div>
+
+            <div class="exp-item">
+              <div class="exp-icon-wrap"><i class="bx bxl-tux"></i></div>
+              <div class="exp-content">
+                <div class="exp-role" data-i18n="exp3_role">System Developer &amp; Administrator</div>
+                <div class="exp-company" data-i18n="exp3_company">Solo Projects</div>
+                <div class="exp-duration" data-i18n="exp3_duration">Continuous</div>
+                <div class="exp-desc" data-i18n="exp3_desc">
+                  Operated various Linux environments (Kali, Mint) for local server deployment and testing. Built full-stack applications utilizing PHP, Laravel, and customized local development stacks.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Text & Skills -->
+        <div class="about-text reveal reveal-delay-2">
+          <p data-i18n="about_p1">
+            Saya <strong>Abdul Shakir Hakim</strong>, seorang graduan <strong>Pengurusan Sistem Maklumat</strong> yang memfokuskan kepada pembangunan sistem logik dan infrastruktur digital. Selepas menamatkan ijazah sarjana muda, saya kini sedang melanjutkan pengajian di peringkat Sarjana (MSc in Information Technology) di <strong>UiTM Shah Alam</strong> untuk mendalami selok-belok pengurusan data dan seni bina sistem peringkat tinggi.
+          </p>
+          <p data-i18n="about_p2">
+            Pengalaman praktikal di jabatan Information Systems, <strong>Lumut Naval Shipyard (LUNAS)</strong> telah mendedahkan saya kepada operasi IT gred industri. Persekitaran kerja yang kritikal dan berdisiplin tinggi di pangkalan tentera laut tersebut membentuk standard saya dalam memastikan setiap aplikasi yang dibangunkan mempunyai tahap kebolehpercayaan, prestasi, dan keselamatan yang ketat sebelum digunakan.
+          </p>
+          <p data-i18n="about_p3">
+            Selain ekosistem korporat, saya aktif membina dan menyelenggara sistem secara peribadi, dari pembangunan web penuh (full-stack) hingga ke konfigurasi pelayan (server) Linux. Dalam aliran kerja moden, saya turut mengaplikasikan kepakaran sebagai <strong>Pakar Prom (Prompt Engineer)</strong>. Saya mengintegrasikan bantuan AI secara strategik untuk mempercepatkan penulisan kod, mengoptimumkan logik, dan menyelesaikan ralat (debugging). Ini memastikan proses pembangunan sistem menjadi jauh lebih efisien berbanding kaedah pengekodan manual tradisional.
+          </p>
+
+          <div class="skills-block">
+            <div class="skills-title" data-i18n="skills_title">Tech Stack &amp; Tools</div>
+            <div class="skills-grid">
+              <span class="skill-pill highlight" data-level="89" data-desc="Native backend coding, session handling, form processing, dan troubleshooting guna error_reporting."><span class="skill-pill-icon"><i class="bx bxl-php"></i></span>PHP</span>
+              <span class="skill-pill highlight" data-level="85" data-desc="MVC architecture, routing, migrations, dan debugging sistem secara terperinci membaca fail laravel.log."><span class="skill-pill-icon"><i class="bx bxs-flame"></i></span>Laravel</span>
+              <span class="skill-pill highlight" data-level="82" data-desc="Table design, raw SQL queries, pengurusan phpMyAdmin, dan penyelesaian isu database connection."><span class="skill-pill-icon"><i class="bx bxs-data"></i></span>MySQL</span>
+              <span class="skill-pill highlight" data-level="90" data-desc="Menggunakan AI untuk menjana kod, mencari punca ralat (debugging), dan mempercepatkan proses development."><span class="skill-pill-icon"><i class="bx bx-brain"></i></span>Prompt Engineering</span>
+              <span class="skill-pill highlight" data-level="67" data-desc="Client-side scripting, form validation, AJAX, dan debug ralat DOM melalui browser console."><span class="skill-pill-icon"><i class="bx bxl-javascript"></i></span>JavaScript</span>
+              <span class="skill-pill" data-level="54" data-desc="Test endpoint guna Postman, handle output JSON, dan troubleshoot isu API connection/response."><span class="skill-pill-icon"><i class="bx bx-plug"></i></span>REST API</span>
+              <span class="skill-pill" data-level="72" data-desc="Rapid UI prototyping guna grid system, pre-built components, dan override default class CSS."><span class="skill-pill-icon"><i class="bx bxl-bootstrap"></i></span>Bootstrap</span>
+              <span class="skill-pill" data-level="80" data-desc="Page structuring, UI styling, dan selesaikan masalah layout website menggunakan Inspect Element."><span class="skill-pill-icon"><i class="bx bxl-html5"></i></span>HTML/CSS</span>
+              <span class="skill-pill" data-level="66" data-desc="Basic scripting untuk simple automation, data handling, dan menyelesaikan syntax errors."><span class="skill-pill-icon"><i class="bx bxl-python"></i></span>Python</span>
+              <span class="skill-pill" data-level="70" data-desc="Manage hosting (cPanel/FTP), setup live database, upload file projek, dan fix live server error."><span class="skill-pill-icon"><i class="bx bx-server"></i></span>Server Deployment</span>
+              <span class="skill-pill" data-level="68" data-desc="Physical setup (crimping kabel RJ45), guna network cable tester, ping test, dan troubleshoot LAN/IP."><span class="skill-pill-icon"><i class="bx bx-network-chart"></i></span>Network Admin</span>
+              <span class="skill-pill" data-level="76" data-desc="Push/pull code, clone repo projek, urus branch, dan track sejarah perubahan kod sistem."><span class="skill-pill-icon"><i class="bx bxl-github"></i></span>Git / GitHub</span>
+              <span class="skill-pill" data-level="33" data-desc="Navigasi CLI (Kali/Mint), urus file permissions (chmod), run command asas, dan semak system logs."><span class="skill-pill-icon"><i class="bx bxl-tux"></i></span>Linux</span>
+              <span class="skill-pill" data-level="61" data-desc="Kumpul requirement, sketch system flow, dan rancang struktur asas database sebelum mula coding."><span class="skill-pill-icon"><i class="bx bx-bar-chart-alt-2"></i></span>Sys Analysis</span>
+            </div>
+
+            <div class="skill-detail" id="skill-detail" aria-live="polite">
+              <div class="skill-detail-header">
+                <span class="skill-detail-name" id="skill-detail-name"></span>
+                <span class="skill-detail-pct" id="skill-detail-pct"></span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" id="skill-bar-fill"></div>
+              </div>
+              <p class="skill-detail-desc" id="skill-detail-desc"></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer class="footer" role="contentinfo">
+      <div class="footer-left">
+        <strong>ABD SHAKIR (HANRICUS)</strong>
+        <span data-i18n="footer_hosted">&copy; 2026 · Hosted on GitHub Pages</span>
+      </div>
+      <div class="footer-right">
+        <a href="#hero" class="footer-link" data-i18n="footer_top">Top</a>
+        <a href="#about" class="footer-link" data-i18n="footer_about">About</a>
+        <a href="https://github.com/Hanricus"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="footer-link">GitHub ↗</a>
+      </div>
+    </footer>
+
+  </div><!-- end page-wrapper -->
+
+  <!-- JavaScript -->
+  <script src="js/main.js" defer></script>
+  <script src="js/translator.js" defer></script>
+</body>
+</html>
